@@ -25,6 +25,11 @@
   grid-template-rows: auto auto minmax(0, 1fr) auto auto;
   overflow: hidden;
 }
+.chart-editor > .editor-heading { grid-row: 1; }
+.chart-editor > .birth-library { grid-row: 2; }
+.chart-editor > .input-panel { grid-row: 3; }
+.chart-editor > .error-message { grid-row: 4; }
+.chart-editor > .editor-submit { grid-row: 5; }
 :is(#settings, #spread-dialog, #confirm) { padding: 0; }
 :is(#settings, #spread-dialog, #confirm) .dialog-scroll { padding: 24px; max-height: calc(100dvh - 42px); }
 :is(.chart-editor, #settings, #spread-dialog, #confirm) h2 { margin: 0; color: #303036; font: 500 20px/1.4 "PingFang SC", sans-serif; }
@@ -140,6 +145,7 @@
   position: relative;
   z-index: 2;
   justify-self: end;
+  align-self: end;
   width: auto;
   min-width: 184px;
   margin-top: 16px;
