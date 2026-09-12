@@ -1,5 +1,6 @@
 import {setupChartWorkspace} from '/shared/chart-workspace.js';
 import {restoreChart} from '/shared/chart-bridge.js';
+import {resolveCalendarBoundary,setupHistoricalUtcLock,setupLocalCalendarBoundary} from '/shared/calendar-boundary.js';
 await (window.redsc1LocaleReady ?? Promise.resolve());
 import * as BaziCore from '/vendor/opendestiny-bazi.js?v=20260831-vendor-clean-v1';
 import { captureChartProfile, setupChartJsonExport } from '/scripts/chart-json-export.js?v=1';
@@ -127,6 +128,8 @@ const STAR_NAMES = Object.freeze({
 });
 
 const form = document.querySelector('#ziwei-form');
+setupLocalCalendarBoundary(form);
+const syncHistoricalUtcOffset=setupHistoricalUtcLock(form);
 setupLocationPicker({ form, trigger: document.querySelector('[data-location-picker]') });
 const app = document.querySelector('#ziwei-app');
 const boardShell = document.querySelector('#ziwei-board-shell');
@@ -298,8 +301,9 @@ function readOptions(data) {
   const clockMode = String(data.get('clockMode'));
   const longitudeDeg = Number(data.get('longitude'));
   const historicalTerms = data.get('pillarHistoricalMode') === 'on';
-  const utcOffsetMinutes = historicalTerms ? 480 : readOffset(data);
   const calendarMode = String(data.get('calendarMode'));
+  const calendarBoundary = resolveCalendarBoundary(calendarMode,String(data.get('calendarDayBoundary')),data.get('longitude'));
+  const utcOffsetMinutes = calendarMode === 'historical' || historicalTerms ? 480 : readOffset(data);
   return new ZiweiOptions({
     gender: data.get('gender') === 'female' ? ZIWEI_GENDER.FEMALE : ZIWEI_GENDER.MALE,
     mode: {
@@ -308,8 +312,7 @@ function readOptions(data) {
       'local-astronomical': CALENDAR_MODE.LOCAL_ASTRONOMICAL,
     }[calendarMode],
     utcOffsetMinutes,
-    dayBoundaryMode: calendarMode === 'local-astronomical' ? 'mean-solar-meridian' : 'fixed-utc-offset',
-    meridianDeg: calendarMode === 'local-astronomical' ? longitudeDeg : undefined,
+    ...calendarBoundary,
     pillarHistoricalMode: historicalTerms ? PILLAR_HISTORICAL_MODE.ON : PILLAR_HISTORICAL_MODE.OFF,
     ratHourMode: {
       'next-day': RAT_HOUR_MODE.NEXT_DAY,
@@ -2316,21 +2319,17 @@ function syncForm(event) {
   const inputCalendar = form.elements.inputCalendar.value;
   document.querySelector('#ziwei-leap-row').hidden = inputCalendar !== 'lunar';
   if (inputCalendar === 'lunar') syncLunarMonthControls(event);
-  const historical = form.elements.pillarHistoricalMode.value === 'on';
-  const offset = document.querySelector('#ziwei-offset-picker');
-  offset.classList.toggle('locked', historical);
-  for (const input of offset.querySelectorAll('input, select')) input.disabled = historical;
-  document.querySelector('#ziwei-offset-note').textContent = historical ? '历史定气已锁定 UTC+08:00' : '不自动处理夏令时';
+  syncHistoricalUtcOffset();
 }
 
 function useCurrentTimeAndZone() {
   const now = new Date();
   const offsetMinutes = -now.getTimezoneOffset();
+  delete form.querySelector('.offset-picker').dataset.savedOffset;
   form.elements.inputCalendar.value = 'solar';
   document.querySelector('#ziwei-leap-row').hidden = true;
   form.elements.pillarHistoricalMode.value = 'off';
   form.elements.clockMode.value = ZIWEI_CLOCK_MODE.CIVIL;
-  syncForm();
   const values = {
     year:now.getFullYear(), month:now.getMonth() + 1, day:now.getDate(),
     hour:now.getHours(), minute:now.getMinutes(), second:now.getSeconds(),
@@ -2339,6 +2338,7 @@ function useCurrentTimeAndZone() {
   form.elements.offsetSign.value = offsetMinutes >= 0 ? '1' : '-1';
   form.elements.offsetHour.value = pad(Math.floor(Math.abs(offsetMinutes) / 60));
   form.elements.offsetMinute.value = pad(Math.abs(offsetMinutes) % 60);
+  syncHistoricalUtcOffset();
 }
 
 form.addEventListener('submit', generate);

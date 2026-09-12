@@ -1,5 +1,6 @@
 import {setupChartWorkspace} from '/shared/chart-workspace.js';
 import {restoreChart} from '/shared/chart-bridge.js';
+import {resolveCalendarBoundary,setupHistoricalUtcLock,setupLocalCalendarBoundary} from '/shared/calendar-boundary.js';
 await (window.redsc1LocaleReady ?? Promise.resolve());
 import { captureChartProfile, setupChartJsonExport } from '/scripts/chart-json-export.js?v=1';
 import { birthHourShiftMinutes } from '/scripts/birth-time-step.js?v=1';
@@ -42,6 +43,8 @@ const MONTH_JIE_INDICES = [21, 23, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19];
 const HOUR_NAMES = ['子时','丑时','寅时','卯时','辰时','巳时','午时','未时','申时','酉时','戌时','亥时'];
 
 const form = document.querySelector('#bazi-form');
+setupLocalCalendarBoundary(form);
+const syncHistoricalUtcOffset=setupHistoricalUtcLock(form);
 const app = document.querySelector('#bazi-app');
 const errorBox = document.querySelector('#bazi-error');
 const pillarBoard = document.querySelector('#pillar-board');
@@ -208,7 +211,8 @@ function optionValues(data) {
   const calendarMode = String(data.get('calendarMode'));
   const pillarHistoricalMode = String(data.get('pillarHistoricalMode'));
   const longitude = Number(data.get('longitude'));
-  const utcOffsetMinutes = pillarHistoricalMode === PILLAR_HISTORICAL_MODE.ON ? 480 : readUtcOffset(data);
+  const calendarBoundary = resolveCalendarBoundary(calendarMode,String(data.get('calendarDayBoundary')),data.get('longitude'));
+  const utcOffsetMinutes = calendarMode === CALENDAR_MODE.HISTORICAL || pillarHistoricalMode === PILLAR_HISTORICAL_MODE.ON ? 480 : readUtcOffset(data);
   const qiyun = {
     'traditional-calendar': QIYUN_TIME_MODEL.TRADITIONAL_CALENDAR,
     'julian-year': QIYUN_TIME_MODEL.JULIAN_YEAR,
@@ -222,8 +226,7 @@ function optionValues(data) {
   return new BaziOptions({
     mode: calendarMode,
     utcOffsetMinutes,
-    dayBoundaryMode: calendarMode === CALENDAR_MODE.LOCAL_ASTRONOMICAL ? 'mean-solar-meridian' : 'fixed-utc-offset',
-    meridianDeg: calendarMode === CALENDAR_MODE.LOCAL_ASTRONOMICAL ? longitude : undefined,
+    ...calendarBoundary,
     pillarHistoricalMode: {
       off: PILLAR_HISTORICAL_MODE.OFF,
       on: PILLAR_HISTORICAL_MODE.ON,
@@ -782,36 +785,15 @@ form.addEventListener('change',(event) => {
   if (event.target?.name === 'pillarHistoricalMode') syncHistoricalTermOffset();
 });
 
-function syncHistoricalTermOffset() {
-  const picker = document.querySelector('.offset-picker');
-  const note = document.querySelector('#offset-mode-note');
-  const sign = form.elements.offsetSign;
-  const hour = form.elements.offsetHour;
-  const minute = form.elements.offsetMinute;
-  const historicalTerms = form.elements.pillarHistoricalMode.value === PILLAR_HISTORICAL_MODE.ON;
-  if (historicalTerms) {
-    if (!picker.dataset.savedOffset) picker.dataset.savedOffset = JSON.stringify([sign.value,hour.value,minute.value]);
-    sign.value = '1';
-    hour.value = '08';
-    minute.value = '00';
-  } else if (picker.dataset.savedOffset) {
-    const saved = JSON.parse(picker.dataset.savedOffset);
-    [sign.value,hour.value,minute.value] = saved;
-    delete picker.dataset.savedOffset;
-  }
-  [sign,hour,minute].forEach((control) => { control.disabled = historicalTerms; });
-  picker.classList.toggle('locked',historicalTerms);
-  note.classList.toggle('locked',historicalTerms);
-  note.textContent = historicalTerms ? '历史定气已锁定 UTC+08:00' : '不自动处理夏令时';
-}
+function syncHistoricalTermOffset() { syncHistoricalUtcOffset(); }
 
 function useCurrentTimeAndZone() {
   const now = new Date();
   const offsetMinutes = -now.getTimezoneOffset();
+  delete form.querySelector('.offset-picker').dataset.savedOffset;
   form.elements.inputCalendar.value = 'solar';
   document.querySelector('#lunar-leap-row').hidden = true;
   form.elements.pillarHistoricalMode.value = PILLAR_HISTORICAL_MODE.OFF;
-  syncHistoricalTermOffset();
   form.elements.clockMode.value = BAZI_CLOCK_MODE.CIVIL;
   const values = {
     year:now.getFullYear(), month:now.getMonth() + 1, day:now.getDate(),
@@ -821,6 +803,7 @@ function useCurrentTimeAndZone() {
   form.elements.offsetSign.value = offsetMinutes >= 0 ? '1' : '-1';
   form.elements.offsetHour.value = pad(Math.floor(Math.abs(offsetMinutes) / 60));
   form.elements.offsetMinute.value = pad(Math.abs(offsetMinutes) % 60);
+  syncHistoricalUtcOffset();
 }
 document.querySelectorAll('input[name="offsetHour"], input[name="offsetMinute"]').forEach((input) => {
   input.addEventListener('blur',() => {

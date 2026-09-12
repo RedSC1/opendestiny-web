@@ -69,6 +69,20 @@ for(const kind of ['bazi','ziwei']){
   // Visible labels and aria-labels already explain these controls. Native title
   // bubbles look like stray placeholder text over the compact chart toolbar.
   .replace(/\s+title="[^"]*"/g,'');
+ markup=markup.replace(
+  /<label class="field full"><span>历法口径<\/span><select name="calendarMode">[\s\S]*?<\/select><\/label>\s*<p class="field-help calendar-help">历史历法先按中国历书规则排月，再映射到上方所选的出生时区。<\/p>/,
+  `<label class="field full"><span>历法口径</span><select name="calendarMode">
+    <option value="historical" selected>中国历史历法</option>
+    <option value="china-astronomical">现代中国天文历法</option>
+    <option value="local-astronomical">当地天文历法</option>
+  </select></label>
+  <p class="field-help calendar-help">中国历史历法使用历书规则；现代中国天文历法固定按 UTC+8 归日；当地天文历法按下方所选日界重建农历。</p>
+  <label class="field full" data-calendar-boundary hidden><span>定气定朔日界</span><select name="calendarDayBoundary" disabled>
+    <option value="fixed-utc-offset">按当地标准时间（标准经线）</option>
+    <option value="mean-solar-meridian" selected>按出生地经度（地方平太阳时）</option>
+  </select></label>
+  <p class="field-help calendar-help" data-calendar-boundary hidden>标准时间使用上方 UTC 偏移所对应的标准经线划日；经度模式使用出生地实际经度的地方平太阳日界。这里影响农历结构，不等同于排盘钟表的太阳时修正。</p>`,
+ );
  const css=[...astro.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].map(m=>m[1]).join('\n').replace(/:global\(([^)]+)\)/g,'$1');
  await mkdir(`public/tools/${kind}`,{recursive:true});
  const seo=embeddedSeo[kind];
@@ -130,7 +144,71 @@ for(const kind of ['bazi','ziwei']){
   "center.append(el('strong', 'zw-center-identity', `${name}　${yinYang}${gender}　${BUREAU_NAMES[chart.anchors.bureau] ?? `${bureauNumber(chart.anchors.bureau)}局`}`));",
   "{ const identity=el('strong','zw-center-identity'); const person=el('span','',name); person.dataset.noI18n=''; identity.append(person,document.createTextNode(`　${yinYang}${gender}　${BUREAU_NAMES[chart.anchors.bureau] ?? `${bureauNumber(chart.anchors.bureau)}局`}`)); center.append(identity); }",
  );
- js=`import {setupChartWorkspace} from '/shared/chart-workspace.js';\nimport {restoreChart} from '/shared/chart-bridge.js';\n`+js+`\nrestoreChart(form,()=>${kind==='bazi'?'calculateAndRender()':'generate()'},'${kind}');\nwindow.parent.postMessage({type:'tool-ready'},location.origin);`;
+ js=js.replace(
+  `const form = document.querySelector('#${kind}-form');`,
+  `const form = document.querySelector('#${kind}-form');\nsetupLocalCalendarBoundary(form);\nconst syncHistoricalUtcOffset=setupHistoricalUtcLock(form);`,
+ );
+ if(kind==='bazi') {
+  js=js.replace(
+   "  const longitude = Number(data.get('longitude'));",
+   "  const longitude = Number(data.get('longitude'));\n  const calendarBoundary = resolveCalendarBoundary(calendarMode,String(data.get('calendarDayBoundary')),data.get('longitude'));",
+  );
+  js=js.replace(
+   "    dayBoundaryMode: calendarMode === CALENDAR_MODE.LOCAL_ASTRONOMICAL ? 'mean-solar-meridian' : 'fixed-utc-offset',\n    meridianDeg: calendarMode === CALENDAR_MODE.LOCAL_ASTRONOMICAL ? longitude : undefined,",
+   "    ...calendarBoundary,",
+  );
+  js=js.replace(
+   "  const utcOffsetMinutes = pillarHistoricalMode === PILLAR_HISTORICAL_MODE.ON ? 480 : readUtcOffset(data);",
+   "  const utcOffsetMinutes = calendarMode === CALENDAR_MODE.HISTORICAL || pillarHistoricalMode === PILLAR_HISTORICAL_MODE.ON ? 480 : readUtcOffset(data);",
+  );
+  js=js.replace(
+   /function syncHistoricalTermOffset\(\) \{[\s\S]*?\n\}\n\nfunction useCurrentTimeAndZone/,
+   `function syncHistoricalTermOffset() { syncHistoricalUtcOffset(); }\n\nfunction useCurrentTimeAndZone`,
+  );
+  js=js.replace(
+   "  form.elements.pillarHistoricalMode.value = PILLAR_HISTORICAL_MODE.OFF;\n  syncHistoricalTermOffset();\n  form.elements.clockMode.value = BAZI_CLOCK_MODE.CIVIL;",
+   "  form.elements.pillarHistoricalMode.value = PILLAR_HISTORICAL_MODE.OFF;\n  form.elements.clockMode.value = BAZI_CLOCK_MODE.CIVIL;",
+  );
+  js=js.replace(
+   "  form.elements.offsetMinute.value = pad(Math.abs(offsetMinutes) % 60);\n}",
+   "  form.elements.offsetMinute.value = pad(Math.abs(offsetMinutes) % 60);\n  syncHistoricalUtcOffset();\n}",
+  );
+ }
+ if(kind==='ziwei') {
+  js=js.replace(
+   "  const historicalTerms = data.get('pillarHistoricalMode') === 'on';\n  const utcOffsetMinutes = historicalTerms ? 480 : readOffset(data);\n  const calendarMode = String(data.get('calendarMode'));",
+   "  const historicalTerms = data.get('pillarHistoricalMode') === 'on';\n  const calendarMode = String(data.get('calendarMode'));\n  const utcOffsetMinutes = calendarMode === 'historical' || historicalTerms ? 480 : readOffset(data);",
+  );
+  js=js.replace(
+   "  const calendarMode = String(data.get('calendarMode'));",
+   "  const calendarMode = String(data.get('calendarMode'));\n  const calendarBoundary = resolveCalendarBoundary(calendarMode,String(data.get('calendarDayBoundary')),data.get('longitude'));",
+  );
+  js=js.replace(
+   "    dayBoundaryMode: calendarMode === 'local-astronomical' ? 'mean-solar-meridian' : 'fixed-utc-offset',\n    meridianDeg: calendarMode === 'local-astronomical' ? longitudeDeg : undefined,",
+   "    ...calendarBoundary,",
+  );
+  js=js.replace(
+   `  const historical = form.elements.pillarHistoricalMode.value === 'on';
+  const offset = document.querySelector('#ziwei-offset-picker');
+  offset.classList.toggle('locked', historical);
+  for (const input of offset.querySelectorAll('input, select')) input.disabled = historical;
+  document.querySelector('#ziwei-offset-note').textContent = historical ? '历史定气已锁定 UTC+08:00' : '不自动处理夏令时';`,
+   "  syncHistoricalUtcOffset();",
+  );
+  js=js.replace(
+   "  form.elements.clockMode.value = ZIWEI_CLOCK_MODE.CIVIL;\n  syncForm();\n  const values = {",
+   "  form.elements.clockMode.value = ZIWEI_CLOCK_MODE.CIVIL;\n  const values = {",
+  );
+  js=js.replace(
+   "  form.elements.offsetMinute.value = pad(Math.abs(offsetMinutes) % 60);\n}",
+   "  form.elements.offsetMinute.value = pad(Math.abs(offsetMinutes) % 60);\n  syncHistoricalUtcOffset();\n}",
+  );
+  }
+ js=js.replace(
+  "  const offsetMinutes = -now.getTimezoneOffset();",
+  "  const offsetMinutes = -now.getTimezoneOffset();\n  delete form.querySelector('.offset-picker').dataset.savedOffset;",
+ );
+ js=`import {setupChartWorkspace} from '/shared/chart-workspace.js';\nimport {restoreChart} from '/shared/chart-bridge.js';\nimport {resolveCalendarBoundary,setupHistoricalUtcLock,setupLocalCalendarBoundary} from '/shared/calendar-boundary.js';\n`+js+`\nrestoreChart(form,()=>${kind==='bazi'?'calculateAndRender()':'generate()'},'${kind}');\nwindow.parent.postMessage({type:'tool-ready'},location.origin);`;
  js+=`\nsetupChartWorkspace(form,'${kind}',()=>${kind==='bazi'?'calculateAndRender()':'generate()'});`;
  await writeFile(`tool-src/scripts/${kind}-page.js`,js);
 }

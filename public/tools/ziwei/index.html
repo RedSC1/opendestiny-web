@@ -39,7 +39,7 @@
   @media(max-width:520px){.result-column{width:100vw;margin-inline:calc(50% - 50vw)}.chart-panel,.timeline-panel{border-radius:10px}.board-stage{padding:.35rem 0}}
   .zw-time-row{height:72px}.zw-time-scroll-shell{position:relative;min-width:0;height:72px;box-sizing:border-box;padding:6px 8px 16px;overflow:hidden}.zw-time-scroll{display:flex;height:50px;gap:6px;padding:0;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:none}.zw-time-scroll::-webkit-scrollbar{display:none}.zw-time-scrollbar{position:absolute;right:8px;bottom:3px;left:8px;height:5px;border-radius:999px;background:rgba(99,102,241,.08);touch-action:none}.zw-time-scrollbar[hidden]{display:none}.zw-time-scroll-thumb{height:100%;border-radius:inherit;background:rgba(99,102,241,.28);cursor:grab;will-change:transform}.zw-time-scroll-thumb:active{cursor:grabbing}.zw-time-card{box-sizing:border-box}
   .zw-time-card .zw-time-solar{color:#94a3b8;font-size:7px;line-height:1}
-</style><link rel="stylesheet" href="../tool-theme.css?v=mtyaq1ya"><link rel="stylesheet" href="../settings-theme.css?v=mtyaq1ya"><link rel="stylesheet" href="../mobile.css?v=mtyaq1ya"><script type="module" src="../../shared/i18n/locale-runtime.js"></script></head><body><div class="tool-savebar tool-toolbar"><a id="chart-back" class="tool-home-link" href="/" target="_top">← 全部工具</a><div class="case-actions"><button id="edit-birth" class="quiet-action">出生资料</button><button id="save-case">保存命例</button><button id="edit-rules" class="quiet-action">排盘规则</button></div></div><p id="case-status" class="case-feedback" role="status"></p>
+</style><link rel="stylesheet" href="../tool-theme.css?v=mtybmfyd"><link rel="stylesheet" href="../settings-theme.css?v=mtybmfyd"><link rel="stylesheet" href="../mobile.css?v=mtybmfyd"><script type="module" src="../../shared/i18n/locale-runtime.js"></script></head><body><div class="tool-savebar tool-toolbar"><a id="chart-back" class="tool-home-link" href="/" target="_top">← 全部工具</a><div class="case-actions"><button id="edit-birth" class="quiet-action">出生资料</button><button id="save-case">保存命例</button><button id="edit-rules" class="quiet-action">排盘规则</button></div></div><p id="case-status" class="case-feedback" role="status"></p>
   <link rel="stylesheet" href="../../styles/location-picker.css?v=20260825-v2" />
   <link rel="stylesheet" href="../../styles/chart-json-export.css?v=3" />
   <link rel="stylesheet" href="../../styles/reverse-lookup.css?v=20260826-v3" />
@@ -137,8 +137,17 @@
           <details class="advanced">
             <summary><span>历法、命盘与闰月设置</span><i>⌄</i></summary>
             <div class="advanced-body">
-              <label class="field full"><span>历法口径</span><select name="calendarMode"><option value="historical" selected>中国历史历法</option><option value="china-astronomical">现代中国天文历法</option><option value="local-astronomical">当地经度定气定朔</option></select></label>
-              <p class="field-help calendar-help">历史历法先按中国历书规则排月，再映射到上方所选的出生时区。</p>
+              <label class="field full"><span>历法口径</span><select name="calendarMode">
+    <option value="historical" selected>中国历史历法</option>
+    <option value="china-astronomical">现代中国天文历法</option>
+    <option value="local-astronomical">当地天文历法</option>
+  </select></label>
+  <p class="field-help calendar-help">中国历史历法使用历书规则；现代中国天文历法固定按 UTC+8 归日；当地天文历法按下方所选日界重建农历。</p>
+  <label class="field full" data-calendar-boundary hidden><span>定气定朔日界</span><select name="calendarDayBoundary" disabled>
+    <option value="fixed-utc-offset">按当地标准时间（标准经线）</option>
+    <option value="mean-solar-meridian" selected>按出生地经度（地方平太阳时）</option>
+  </select></label>
+  <p class="field-help calendar-help" data-calendar-boundary hidden>标准时间使用上方 UTC 偏移所对应的标准经线划日；经度模式使用出生地实际经度的地方平太阳日界。这里影响农历结构，不等同于排盘钟表的太阳时修正。</p>
               <label class="field full"><span>历史定气</span><select name="pillarHistoricalMode"><option value="off" selected>精确定气时刻</option><option value="on">历史定气 · 锁定 UTC+8</option></select></label>
               <p class="field-help calendar-help">历史定气按中国历书日切换年、月柱，因此出生钟表也会锁定为 UTC+8。</p>
               <input type="hidden" name="chartMode" value="tian" />
@@ -202,4 +211,4 @@
       </div>
     </div>
   </section>
-<script type="module" src="../engines/ziwei-page.js?v=mtyaq1ya"></script></body></html>
+<script type="module" src="../engines/ziwei-page.js?v=mtybmfyd"></script></body></html>

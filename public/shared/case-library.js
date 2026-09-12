@@ -5,7 +5,7 @@ export function sharedBirthFields(record) {
   if (!Array.isArray(fields)) throw new Error('这份旧命例没有保存出生资料，无法填入。');
   const lunar = fields.some(f => f.name === 'inputCalendar' && f.value === 'lunar' && (f.type !== 'radio' || f.checked));
   // A lunar date needs its calendar convention to retain the same meaning.
-  return fields.filter(f => BIRTH_FIELDS.has(f.name) || (lunar && f.name === 'calendarMode'));
+  return fields.filter(f => BIRTH_FIELDS.has(f.name) || (lunar && ['calendarMode','calendarDayBoundary'].includes(f.name)));
 }
 export function applyBirthFields(form, record) {
   const fields = sharedBirthFields(record);
@@ -15,10 +15,17 @@ export function applyBirthFields(form, record) {
     else if (e.type === 'checkbox') e.checked = saved.checked;
     else e.value = saved.value;
   }};
-  apply();
-  for (const name of ['calendarMode','inputCalendar','lunarLeapToggle','lunarSpecialToggle']) {
+  const dispatch = name => {
     const e = form.querySelector(`[name="${name}"]:checked`) || form.querySelector(`[name="${name}"]`);
     e?.dispatchEvent(new Event('change', {bubbles:true}));
+  };
+  const offsetPicker = form.querySelector('.offset-picker');
+  if (offsetPicker) delete offsetPicker.dataset.savedOffset;
+  apply();
+  for (const name of ['calendarMode','calendarDayBoundary','inputCalendar','lunarLeapToggle','lunarSpecialToggle']) {
+    dispatch(name);
   }
   apply();
+  dispatch('calendarMode');
+  dispatch('calendarDayBoundary');
 }

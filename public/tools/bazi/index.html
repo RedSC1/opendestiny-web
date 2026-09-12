@@ -239,7 +239,7 @@
     .chart-header-actions { width: 100%; justify-content: space-between; }
     .bazi-birth-toolbar { flex: 1; justify-content: center; }
   }
-</style><link rel="stylesheet" href="../tool-theme.css?v=mtyaq1ya"><link rel="stylesheet" href="../settings-theme.css?v=mtyaq1ya"><link rel="stylesheet" href="../mobile.css?v=mtyaq1ya"><script type="module" src="../../shared/i18n/locale-runtime.js"></script></head><body><div class="tool-savebar tool-toolbar"><a id="chart-back" class="tool-home-link" href="/" target="_top">← 全部工具</a><div class="case-actions"><button id="edit-birth" class="quiet-action">出生资料</button><button id="save-case">保存命例</button><button id="edit-rules" class="quiet-action">排盘规则</button></div></div><p id="case-status" class="case-feedback" role="status"></p>  <link rel="stylesheet" href="../../styles/location-picker.css?v=20260825-v2" />
+</style><link rel="stylesheet" href="../tool-theme.css?v=mtybmfyd"><link rel="stylesheet" href="../settings-theme.css?v=mtybmfyd"><link rel="stylesheet" href="../mobile.css?v=mtybmfyd"><script type="module" src="../../shared/i18n/locale-runtime.js"></script></head><body><div class="tool-savebar tool-toolbar"><a id="chart-back" class="tool-home-link" href="/" target="_top">← 全部工具</a><div class="case-actions"><button id="edit-birth" class="quiet-action">出生资料</button><button id="save-case">保存命例</button><button id="edit-rules" class="quiet-action">排盘规则</button></div></div><p id="case-status" class="case-feedback" role="status"></p>  <link rel="stylesheet" href="../../styles/location-picker.css?v=20260825-v2" />
   <link rel="stylesheet" href="../../styles/chart-json-export.css?v=2" />
   <link rel="stylesheet" href="../../styles/reverse-lookup.css?v=20260826-v3" />
   <section class="bazi-page" id="bazi-app">
@@ -347,11 +347,16 @@
             <summary><span>历法、子时与起运设置</span><i>⌄</i></summary>
             <div class="advanced-body">
               <label class="field full"><span>历法口径</span><select name="calendarMode">
-                <option value="historical" selected>中国历史历法</option>
-                <option value="china-astronomical">现代中国天文历法</option>
-                <option value="local-astronomical">当地经度定气定朔</option>
-              </select></label>
-              <p class="field-help calendar-help">历史历法先按中国历书规则排月，再映射到上方所选的出生时区。</p>
+    <option value="historical" selected>中国历史历法</option>
+    <option value="china-astronomical">现代中国天文历法</option>
+    <option value="local-astronomical">当地天文历法</option>
+  </select></label>
+  <p class="field-help calendar-help">中国历史历法使用历书规则；现代中国天文历法固定按 UTC+8 归日；当地天文历法按下方所选日界重建农历。</p>
+  <label class="field full" data-calendar-boundary hidden><span>定气定朔日界</span><select name="calendarDayBoundary" disabled>
+    <option value="fixed-utc-offset">按当地标准时间（标准经线）</option>
+    <option value="mean-solar-meridian" selected>按出生地经度（地方平太阳时）</option>
+  </select></label>
+  <p class="field-help calendar-help" data-calendar-boundary hidden>标准时间使用上方 UTC 偏移所对应的标准经线划日；经度模式使用出生地实际经度的地方平太阳日界。这里影响农历结构，不等同于排盘钟表的太阳时修正。</p>
               <label class="field full"><span>节气边界</span><select name="pillarHistoricalMode">
                 <option value="off" selected>精确定气时刻</option>
                 <option value="on">历史定气 · UTC+8 日界</option>
@@ -467,4 +472,4 @@
       </div>
     </div>
   </section>
-<script type="module" src="../engines/bazi-page.js?v=mtyaq1ya"></script></body></html>
+<script type="module" src="../engines/bazi-page.js?v=mtybmfyd"></script></body></html>
