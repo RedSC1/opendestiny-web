@@ -32,9 +32,9 @@ for(const kind of ['calendar','qishuo']){
  await writeFile(`public/tools/${kind}/index.html`,cleanTrailingWhitespace(`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${seo.title}</title><meta name="description" content="${seo.description}"><link rel="canonical" href="${seo.canonical}"><style>${css}</style><script type="module" src="../../shared/i18n/locale-runtime.js"></script></head><body class="almanac-tool"><div class="tool-toolbar"><a class="tool-home-link" href="/" target="_top">← 全部工具</a>${toolbarTitle}</div>${markup}<link rel="stylesheet" href="../tool-theme.css?v=${version}"><link rel="stylesheet" href="../almanac-theme.css?v=${version}"><script type="module" src="../almanac-engines/${kind}-page.js?v=${version}"></script></body></html>`));
  let js=await readFile(`tool-src/scripts/${kind}-page.js`,'utf8');
  js=`await (window.redsc1LocaleReady ?? Promise.resolve());\n`+js;
- if(kind==='calendar') js=js.replace(/\s+title="\$\{escape\(aria\)\}"/,'');
+ if(kind==='calendar') js=js.replace(/\s+title="\$\{escape\(aria\)\}"/,'').replace('\nrefresh();','\nawait refresh();');
  js=js.replace("'/scripts/qishuo-worker.js?v=20260831-vendor-clean-v1'", "new URL('./qishuo-worker.js',import.meta.url)");
- js+='\nwindow.parent.postMessage({type:"tool-ready"},location.origin);';
+ js+='\ndocument.documentElement.dataset.toolReady="true";\nwindow.parent.postMessage({type:"tool-ready"},location.origin);';
  await writeFile(`tool-src/scripts/${kind}-page.js`,cleanTrailingWhitespace(js));
 }
 await rm('public/tools/almanac-engines',{recursive:true,force:true});

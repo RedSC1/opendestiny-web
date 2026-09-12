@@ -869,5 +869,6 @@ setupBaziReverseLookup({
 });
 
 restoreChart(form,()=>calculateAndRender(),'bazi');
+document.documentElement.dataset.toolReady='true';
 window.parent.postMessage({type:'tool-ready'},location.origin);
 setupChartWorkspace(form,'bazi',()=>calculateAndRender());

@@ -322,6 +322,7 @@ $('use-device-location').addEventListener('click', () => {
     button.disabled = false; button.textContent = '使用设备位置';
   }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 600000 });
 });
-refresh();
+await refresh();
 
+document.documentElement.dataset.toolReady="true";
 window.parent.postMessage({type:"tool-ready"},location.origin);

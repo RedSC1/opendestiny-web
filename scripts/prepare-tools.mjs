@@ -208,7 +208,7 @@ for(const kind of ['bazi','ziwei']){
   "  const offsetMinutes = -now.getTimezoneOffset();",
   "  const offsetMinutes = -now.getTimezoneOffset();\n  delete form.querySelector('.offset-picker').dataset.savedOffset;",
  );
- js=`import {setupChartWorkspace} from '/shared/chart-workspace.js';\nimport {restoreChart} from '/shared/chart-bridge.js';\nimport {resolveCalendarBoundary,setupHistoricalUtcLock,setupLocalCalendarBoundary} from '/shared/calendar-boundary.js';\n`+js+`\nrestoreChart(form,()=>${kind==='bazi'?'calculateAndRender()':'generate()'},'${kind}');\nwindow.parent.postMessage({type:'tool-ready'},location.origin);`;
+ js=`import {setupChartWorkspace} from '/shared/chart-workspace.js';\nimport {restoreChart} from '/shared/chart-bridge.js';\nimport {resolveCalendarBoundary,setupHistoricalUtcLock,setupLocalCalendarBoundary} from '/shared/calendar-boundary.js';\n`+js+`\nrestoreChart(form,()=>${kind==='bazi'?'calculateAndRender()':'generate()'},'${kind}');\ndocument.documentElement.dataset.toolReady='true';\nwindow.parent.postMessage({type:'tool-ready'},location.origin);`;
  js+=`\nsetupChartWorkspace(form,'${kind}',()=>${kind==='bazi'?'calculateAndRender()':'generate()'});`;
  await writeFile(`tool-src/scripts/${kind}-page.js`,js);
 }
@@ -297,8 +297,8 @@ function preloadTableAssets() {
 const spreadLabels =`);
 app=app.replace('function startReading(', 'function startReading(').replace(/(function startReading\([^)]*\) \{)/,"$1\n historyId=crypto.randomUUID();\n $('tarot-save-status').textContent='';$('tarot-save-retry').hidden=true;");
 app=app.replace("function afterReveal() {","function afterReveal() {").replace("'revealed' : 'drawComplete');\n}","'revealed' : 'drawComplete');\n if(reading.phase==='revealed')saveHistory();\n}");
-app+=`\n\nfunction saveHistory(){try{saveRecord({id:historyId,kind:'tarot',title:reading.question||'无题的探索',createdAt:Date.now(),snapshot:{question:reading.question,spread:{...spread(),name:spreadLabels[spread().id]||spread().name},cards:reading.cards.map(({card},i)=>({...card,position:spread().positions[i].label}))}});$('tarot-save-status').textContent='本次抽牌已保存到历史记录';$('tarot-save-retry').hidden=true;}catch(e){$('tarot-save-status').textContent='记录保存失败：'+e.message;$('tarot-save-retry').hidden=false;}}\n$('tarot-save-retry').onclick=saveHistory;\nwindow.parent.postMessage({type:'tool-ready'},location.origin);`;
-app=app.replace('\nstartReading();','\nstartReading();\nvoid preloadTableAssets();');
+app+=`\n\nfunction saveHistory(){try{saveRecord({id:historyId,kind:'tarot',title:reading.question||'无题的探索',createdAt:Date.now(),snapshot:{question:reading.question,spread:{...spread(),name:spreadLabels[spread().id]||spread().name},cards:reading.cards.map(({card},i)=>({...card,position:spread().positions[i].label}))}});$('tarot-save-status').textContent='本次抽牌已保存到历史记录';$('tarot-save-retry').hidden=true;}catch(e){$('tarot-save-status').textContent='记录保存失败：'+e.message;$('tarot-save-retry').hidden=false;}}\n$('tarot-save-retry').onclick=saveHistory;\ndocument.documentElement.dataset.toolReady='true';\nwindow.parent.postMessage({type:'tool-ready'},location.origin);`;
+app=app.replace('\nstartReading();','\nstartReading();\nawait preloadTableAssets();');
 await writeFile('public/tools/tarot/app.js',app);
 console.log('Prepared static tarot, bazi, ziwei and shared engine chunks.');
 await import('./prepare-calendar-tools.mjs');

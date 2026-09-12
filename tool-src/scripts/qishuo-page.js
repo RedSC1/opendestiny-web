@@ -286,4 +286,5 @@ try {
   showError(error?.message || String(error));
 }
 
+document.documentElement.dataset.toolReady="true";
 window.parent.postMessage({type:"tool-ready"},location.origin);

@@ -493,7 +493,7 @@ $('settings-form').onsubmit = event => {
   requestReset({ cardIds: selected });
 };
 startReading();
-void preloadTableAssets();
+await preloadTableAssets();
 
 // Fit the physical table into the available stage, never outside the viewport.
 function fitTable() {
@@ -558,4 +558,5 @@ $('free-spread-form').onsubmit = event => {
 
 function saveHistory(){try{saveRecord({id:historyId,kind:'tarot',title:reading.question||'无题的探索',createdAt:Date.now(),snapshot:{question:reading.question,spread:{...spread(),name:spreadLabels[spread().id]||spread().name},cards:reading.cards.map(({card},i)=>({...card,position:spread().positions[i].label}))}});$('tarot-save-status').textContent='本次抽牌已保存到历史记录';$('tarot-save-retry').hidden=true;}catch(e){$('tarot-save-status').textContent='记录保存失败：'+e.message;$('tarot-save-retry').hidden=false;}}
 $('tarot-save-retry').onclick=saveHistory;
+document.documentElement.dataset.toolReady='true';
 window.parent.postMessage({type:'tool-ready'},location.origin);

@@ -2445,5 +2445,6 @@ setupZiweiReverseLookup({
 document.fonts?.ready.then(scheduleFlyingTargetTextAlignment);
 
 restoreChart(form,()=>generate(),'ziwei');
+document.documentElement.dataset.toolReady='true';
 window.parent.postMessage({type:'tool-ready'},location.origin);
 setupChartWorkspace(form,'ziwei',()=>generate());
