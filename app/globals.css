@@ -284,3 +284,17 @@
   .about-section-heading>p { margin-top:8px; text-align:left; }
   .about-notice,.about-license { grid-template-columns:1fr; padding:20px; }
 }
+
+/* Tarot history uses the actual cards; long spreads stay compact and scroll. */
+.saved-tarot { padding:18px; background:#fffdfc; }
+.saved-tarot .saved-open h2 { margin:14px 0 16px; }
+.saved-tarot .saved-open time { margin:15px 0 13px; }
+.saved-tarot .saved-action { color:#895768; }
+.history-preview { display:flex; height:118px; align-items:center; gap:9px; padding:10px 12px; overflow-x:auto; overflow-y:hidden; overscroll-behavior-x:contain; border:1px solid #eee5e2; border-radius:11px; background:linear-gradient(135deg,#f8f3f1,#f3eeeb); scrollbar-width:thin; scrollbar-color:#c9afb7 transparent; scroll-snap-type:x proximity; -webkit-overflow-scrolling:touch; }
+.history-preview::-webkit-scrollbar { height:5px; }
+.history-preview::-webkit-scrollbar-thumb { border-radius:999px; background:#c9afb7; }
+.history-preview-card { display:block; flex:0 0 56px; scroll-snap-align:start; }
+.history-preview-card img { display:block; width:56px; height:auto; aspect-ratio:7/12; border-radius:3px; box-shadow:0 5px 12px #432b3224; }
+.history-preview-card img.reversed { transform:rotate(180deg); }
+.history-summary { display:flex; justify-content:space-between; gap:12px; margin-top:12px!important; color:#877e7b!important; }
+.history-summary span:last-child { flex:none; color:#a48690; }

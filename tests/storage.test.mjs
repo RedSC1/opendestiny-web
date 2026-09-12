@@ -70,6 +70,27 @@ test('case archive excludes local ids and tarot history, then assigns a new id o
  assert.deepEqual(result,{added:1,duplicateCount:0});assert.equal(store.listRecords('cases')[0].id,'3');assert.equal(store.listRecords('tarot')[0].id,'2');
 });
 
+test('tarot archive backs up readings separately and reallocates local ids',()=>{
+ reset();
+ const reading=record('tarot',{snapshot:{question:'today',spread:{id:'one',name:'此刻的指引',cardCount:1,positions:[{key:'focus',label:'此刻'}]},cards:[{id:0,name:'The Fool',reversed:false,position:'此刻'}]}});
+ store.saveRecord(reading);store.saveRecord(record('case',{birth:{year:2000}}));
+ const archive=store.createTarotArchive();
+ assert.equal(archive.format,'redsc1-tools-tarot-history');assert.equal(archive.version,1);assert.deepEqual(archive.records.map(item=>item.index),[1]);assert.equal('id' in archive.records[0],false);
+ assert.deepEqual(store.previewTarotImport(archive),{total:1,newCount:0,duplicateCount:1});
+ store.clearRecords('tarot');
+ assert.deepEqual(store.importTarotArchive(JSON.stringify(archive)),{added:1,duplicateCount:0});
+ assert.equal(store.listRecords('tarot')[0].id,'3');assert.equal(store.listRecords('cases')[0].id,'2');
+});
+
+test('tarot import skips exact readings and rejects case archives',()=>{
+ reset();
+ const reading={index:1,...record('tarot',{snapshot:{question:'today',spread:{id:'one',name:'此刻的指引'},cards:[{id:0,name:'The Fool',reversed:false,position:'此刻'}]}})};
+ const archive={format:'redsc1-tools-tarot-history',version:1,records:[reading,{...reading,index:2,createdAt:99}]};
+ assert.deepEqual(store.previewTarotImport(archive),{total:2,newCount:1,duplicateCount:1});
+ assert.deepEqual(store.importTarotArchive(archive),{added:1,duplicateCount:1});
+ assert.throws(()=>store.importTarotArchive(store.createCaseArchive()),/抽牌历史备份/);
+});
+
 test('different content imports as another record while exact content is skipped',()=>{
  reset();const original=store.saveRecord(record('case',{birth:{year:2000,month:1,day:1}}));
  const same={...original,id:'from-another-browser',createdAt:999};

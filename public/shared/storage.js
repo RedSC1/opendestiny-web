@@ -6,6 +6,8 @@ const LAST_RECORD_ID_KEY=PREFIX+'last-record-id';
 const MAX_RECORD_ID=2147483647;
 export const CASE_ARCHIVE_FORMAT='redsc1-tools-cases';
 export const CASE_ARCHIVE_VERSION=2;
+export const TAROT_ARCHIVE_FORMAT='redsc1-tools-tarot-history';
+export const TAROT_ARCHIVE_VERSION=1;
 
 export function signalChange(){window.dispatchEvent(new Event('tools-data'));if(window.parent!==window)window.parent.postMessage({type:'tools-data'},location.origin);}
 
@@ -150,6 +152,21 @@ function validateCaseRecord(value,index,version){
  delete copy.id;delete copy.index;
  return copy;
 }
+function validateTarotRecord(value,index){
+ if(!value||typeof value!=='object'||Array.isArray(value))throw new Error(`第 ${index+1} 条抽牌记录格式不正确。`);
+ if(value.kind!=='tarot')throw new Error(`第 ${index+1} 条记录不是塔罗牌阵。`);
+ if(value.index!==index+1)throw new Error(`第 ${index+1} 条抽牌记录的文件内序号无效。`);
+ if(typeof value.title!=='string'||!value.title.trim()||value.title.length>1000)throw new Error(`第 ${index+1} 条抽牌记录标题无效。`);
+ if(!Number.isFinite(value.createdAt)||value.createdAt<=0)throw new Error(`第 ${index+1} 条抽牌记录时间无效。`);
+ if(!value.snapshot||typeof value.snapshot!=='object'||!Array.isArray(value.snapshot.cards)||!value.snapshot.spread)throw new Error(`第 ${index+1} 条抽牌记录缺少牌阵数据。`);
+ if(value.snapshot.cards.length>78)throw new Error(`第 ${index+1} 条抽牌记录超过 78 张牌。`);
+ for(const card of value.snapshot.cards){
+  if(!card||!Number.isInteger(card.id)||card.id<0||card.id>77||typeof card.name!=='string'||typeof card.reversed!=='boolean')throw new Error(`第 ${index+1} 条抽牌记录包含无效牌面。`);
+ }
+ const copy=JSON.parse(JSON.stringify(value));
+ delete copy.id;delete copy.index;
+ return copy;
+}
 export function createCaseArchive(){
  const records=listRecords('cases').map((record,index)=>{const content={...record};delete content.id;return {index:index+1,...content};});
  return {format:CASE_ARCHIVE_FORMAT,version:CASE_ARCHIVE_VERSION,exportedAt:new Date().toISOString(),records};
@@ -177,6 +194,53 @@ export function previewCaseImport(input){
 }
 export function importCaseArchive(input){
  const incoming=parseCaseArchive(input),working=listRecords('cases').slice(),accepted=[];
+ let duplicateCount=0;
+ for(const record of incoming){
+  if(working.some(item=>isDuplicate(item,record))){duplicateCount++;continue;}
+  working.push(record);accepted.push(record);
+ }
+ if(!accepted.length)return {added:0,duplicateCount};
+ const allocation=reserveRecordIds(accepted.length),written=[];
+ try{
+  accepted.forEach((record,index)=>{
+   const id=String(allocation.first+index),saved={...record,id};
+   localStorage.setItem(RECORD_PREFIX+id,JSON.stringify(saved));written.push(id);
+  });
+ }catch(error){
+  for(const id of written)localStorage.removeItem(RECORD_PREFIX+id);
+  restoreValue(LAST_RECORD_ID_KEY,allocation.previousLast);
+  throw storageError(error);
+ }
+ signalChange();
+ return {added:accepted.length,duplicateCount};
+}
+export function createTarotArchive(){
+ const records=listRecords('tarot').map((record,index)=>{const content={...record};delete content.id;return {index:index+1,...content};});
+ return {format:TAROT_ARCHIVE_FORMAT,version:TAROT_ARCHIVE_VERSION,exportedAt:new Date().toISOString(),records};
+}
+export function parseTarotArchive(input){
+ let value=input;
+ if(typeof input==='string'){
+  try{value=JSON.parse(input);}catch{throw new Error('无法读取这个文件，请选择由本工具导出的 JSON 抽牌历史备份。');}
+ }
+ if(!value||typeof value!=='object'||Array.isArray(value))throw new Error('抽牌历史备份格式不正确。');
+ if(value.format!==TAROT_ARCHIVE_FORMAT)throw new Error('这不是本工具导出的抽牌历史备份。');
+ if(value.version!==TAROT_ARCHIVE_VERSION)throw new Error(`暂不支持版本 ${String(value.version)} 的抽牌历史备份。`);
+ if(!Array.isArray(value.records))throw new Error('抽牌历史备份中没有可读取的记录。');
+ if(value.records.length>10000)throw new Error('单次最多导入 10000 条抽牌记录。');
+ return value.records.map((record,index)=>validateTarotRecord(record,index));
+}
+export function previewTarotImport(input){
+ const incoming=parseTarotArchive(input),working=listRecords('tarot').slice();
+ let newCount=0,duplicateCount=0;
+ for(const record of incoming){
+  if(working.some(item=>isDuplicate(item,record))){duplicateCount++;continue;}
+  working.push(record);newCount++;
+ }
+ return {total:incoming.length,newCount,duplicateCount};
+}
+export function importTarotArchive(input){
+ const incoming=parseTarotArchive(input),working=listRecords('tarot').slice(),accepted=[];
  let duplicateCount=0;
  for(const record of incoming){
   if(working.some(item=>isDuplicate(item,record))){duplicateCount++;continue;}
