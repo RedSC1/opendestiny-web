@@ -8,6 +8,7 @@ const root=process.cwd(),core=packageRoot('js-ephemeris-lite'),huangli=packageRo
 const coreEntry=require.resolve('js-ephemeris-lite'),huangliEntry=require.resolve('huangli-lite');
 const version=Date.now().toString(36);
 const cleanTrailingWhitespace=value=>value.replace(/[ \t]+$/gm,'');
+const toolBootStyle='<style data-tool-boot>body{visibility:hidden}html[data-tool-ready="true"] body{visibility:visible}</style>';
 const embeddedSeo={
  calendar:{title:'在线万年历｜公历、农历、节气与黄历',description:'在线万年历，查询公历、农历、干支、节气、节日与黄历信息，支持历史日期和不同历法口径。',canonical:'https://tools.redsc1.com/calendar'},
  qishuo:{title:'气朔推算｜节气、朔望与天文历法计算',description:'在线计算节气、朔、望等日月事件时刻，查看历法归日与计算精度，适合天文历法研究和日期核对。',canonical:'https://tools.redsc1.com/qishuo'},
@@ -29,7 +30,7 @@ for(const kind of ['calendar','qishuo']){
  await mkdir(`public/tools/${kind}`,{recursive:true});
  const seo=embeddedSeo[kind];
  const toolbarTitle=kind==='calendar'?'<span>万年历</span>':'<h1>气朔推算</h1>';
- await writeFile(`public/tools/${kind}/index.html`,cleanTrailingWhitespace(`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${seo.title}</title><meta name="description" content="${seo.description}"><link rel="canonical" href="${seo.canonical}"><style>${css}</style><script type="module" src="../../shared/i18n/locale-runtime.js"></script></head><body class="almanac-tool"><div class="tool-toolbar"><a class="tool-home-link" href="/" target="_top">← 全部工具</a>${toolbarTitle}</div>${markup}<link rel="stylesheet" href="../tool-theme.css?v=${version}"><link rel="stylesheet" href="../almanac-theme.css?v=${version}"><script type="module" src="../almanac-engines/${kind}-page.js?v=${version}"></script></body></html>`));
+ await writeFile(`public/tools/${kind}/index.html`,cleanTrailingWhitespace(`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">${toolBootStyle}<title>${seo.title}</title><meta name="description" content="${seo.description}"><link rel="canonical" href="${seo.canonical}"><style>${css}</style><script type="module" src="../../shared/i18n/locale-runtime.js"></script></head><body class="almanac-tool"><div class="tool-toolbar"><a class="tool-home-link" href="/" target="_top">← 全部工具</a>${toolbarTitle}</div>${markup}<link rel="stylesheet" href="../tool-theme.css?v=${version}"><link rel="stylesheet" href="../almanac-theme.css?v=${version}"><script type="module" src="../almanac-engines/${kind}-page.js?v=${version}"></script></body></html>`));
  let js=await readFile(`tool-src/scripts/${kind}-page.js`,'utf8');
  js=`await (window.redsc1LocaleReady ?? Promise.resolve());\n`+js;
  if(kind==='calendar') js=js.replace(/\s+title="\$\{escape\(aria\)\}"/,'').replace('\nrefresh();','\nawait refresh();');
