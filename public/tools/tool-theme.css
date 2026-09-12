@@ -1,0 +1,137 @@
+:root{--accent: #925465;--accent-rgb:146,84,101;--text-primary:#303036;--text-secondary:#73737b;--text-muted:#8b8b91;--bg-color:#fafaf8;--card-bg:#fff;--border-color:#e6e3e1;color-scheme:light}*{box-sizing:border-box}body{margin:0;padding:22px;font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#fafaf8;color:#303036}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit}button:focus-visible,a:focus-visible{outline:2px solid #925465;outline-offset:3px}[hidden]{display:none!important}.page-heading{display:none!important}.glass-panel,.chart-panel,.timeline-panel{background:#fff!important;border:1px solid #e7e4e2!important;box-shadow:none!important;backdrop-filter:none!important;border-radius:12px!important}.input-panel{background:#f7f5f4!important}.tool-savebar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:18px;font-size:14px}.tool-savebar button{border:1px solid #ba939f;background:#925465;color:#fff;padding:10px 20px;border-radius:8px}.tool-savebar span{color:#777}.bazi-workspace,.ziwei-workspace{margin:0!important}.back-link{display:none!important}.chart-heading h2{font-weight:500!important}.field input,.field select{background:#fff!important;border-color:#ddd8d7!important}.primary-button{background:#925465!important}#bazi-app,#ziwei-app{max-width:1600px;margin:auto}dialog{color:#303036} .front img{object-fit:cover}body.tarot-embedded{padding:0;min-width:0}.tarot-embedded>header,.tarot-embedded>footer{display:none}.tarot-embedded main{max-width:none;padding-top:0}.tarot-embedded .setup{flex-wrap:wrap}.tarot-embedded .question{min-width:180px}.tarot-embedded .reading{min-width:0}.tarot-save-status{font-size:14px;color:#82636d;margin:8px 0;min-height:1.5em}@media(max-width:760px){body{padding:12px}.tool-savebar{align-items:flex-start;flex-wrap:wrap}.tarot-embedded .setup{display:flex;gap:12px}.tarot-embedded .question{width:100%;flex-basis:100%}.tarot-embedded .reading-heading{gap:10px}.tarot-embedded .deck-heading{flex-wrap:wrap;gap:12px}.tarot-embedded .browse>span{display:none}.tarot-embedded main{padding:14px}.tarot-embedded .header-actions{flex-wrap:wrap}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+.tarot-embedded>header{display:flex!important;justify-content:flex-end;padding:12px 22px;border-bottom:1px solid #e8e3df}.tarot-embedded .wordmark{display:none}.tarot-embedded .header-actions{display:flex;gap:10px}
+
+/* Give the two Ganzhi characters distinct vertical positions in fortune cards. */
+#bazi-app .fortune-card > strong {
+  line-height: 1.12;
+}
+#bazi-app .fortune-card > strong + strong {
+  margin-top: .08rem;
+}
+#bazi-app .fortune-card {
+  padding-block: .65rem;
+}
+
+/* Keep save feedback outside the three-row settings / reading / deck grid. */
+body.tarot-embedded {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+.tarot-embedded > header {
+  gap: 12px;
+  min-height: 64px;
+}
+.tarot-embedded main {
+  width: 100%;
+  margin-inline: auto;
+}
+.tarot-save-feedback {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-right: auto;
+  min-width: 0;
+}
+.tarot-save-status:empty {
+  display: none;
+}
+@media (max-width: 760px) {
+  .tarot-embedded > header { flex-wrap: wrap; }
+}
+
+/* Chart workspace: a single toolbar and an unobstructed result surface. */
+.tool-savebar { margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #e6e3e1; flex-wrap: wrap; }
+.case-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.tool-savebar .quiet-action { background: #fff; color: #79636b; border-color: #e4dbdf; }
+.case-feedback { color: #82636d; font-size: 13px; margin: 0 0 12px; }
+.case-feedback:empty { display: none; }
+.bazi-workspace,.ziwei-workspace,.bazi-workspace.input-collapsed,.ziwei-workspace.input-collapsed { display: block !important; }
+.bazi-workspace::before,.ziwei-workspace::before { display: none !important; }
+.chart-editor { width: min(620px,calc(100vw - 32px)); max-height: calc(100dvh - 40px); padding: 24px; border: 1px solid #e5dbdf; border-radius: 16px; background: #fafaf8; overflow: auto; }
+.chart-editor::backdrop { background: #33283066; }
+.editor-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.editor-heading h2 { margin: 0; font-size: 20px; }
+.editor-heading p { color: #8b7f84; font-size: 13px; line-height: 1.7; }
+.editor-close { border: 0; background: transparent; font-size: 26px; color: #876b76; }
+.chart-editor .input-panel { position: static !important; width: 100% !important; max-height: none !important; padding: 0 !important; border: 0 !important; background: transparent !important; overflow: visible !important; box-shadow: none !important; }
+.chart-editor form { display: grid !important; grid-template-columns: 1fr !important; gap: 16px; }
+.chart-editor .advanced { border: 0; padding: 0; }
+.chart-editor .advanced > summary { display: none; }
+.chart-editor .calculate-button { background: #925465; color: #fff; border-radius: 9px; }
+#bazi-app .fortune-scroll { height: auto !important; min-height: 0; align-items: stretch; padding: 3px 3px 20px; scrollbar-width: thin; }
+#bazi-app .fortune-card { flex-shrink: 0; height: auto; }
+
+/* Give the era-free center a readable rhythm, including active flow views. */
+#ziwei-app .zw-center,
+#ziwei-app .zw-center:has(.zw-center-flow) { gap: 2.5px; }
+#ziwei-app .zw-center > span,
+#ziwei-app .zw-center .zw-center-identity { line-height: 1.35; }
+#ziwei-app .zw-center-identity { margin-bottom: 2px; }
+#ziwei-app .zw-center .zw-center-masters { line-height: 1.35 !important; margin-top: 2px; }
+#ziwei-app .zw-center .zw-sihua-legend { margin-top: 2px; }
+
+/* Separate the embedded pillars and fortunes from the birth summary. */
+#ziwei-app .zw-center .zw-center-bazi,
+#ziwei-app .zw-center:has(.zw-center-flow) .zw-center-bazi {
+  margin-top: 12px;
+  padding-top: 0;
+  flex-shrink: 0;
+}
+#ziwei-app .zw-center-brand { display: none; }
+
+/* One toolbar treatment across every tool, with a native top-level home link. */
+.tool-toolbar,
+.tarot-embedded > header.tool-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64px;
+  gap: 12px;
+  padding: 12px 22px;
+  background: #fafaf8;
+  border-bottom: 1px solid #e6e3e1;
+  font-size: 14px;
+}
+.tool-savebar.tool-toolbar { margin: -22px -22px 20px; }
+.tool-toolbar .tool-home-link {
+  display: inline-flex; align-items: center; flex-shrink: 0;
+  min-height: 36px; padding: 7px 0; border: 0;
+  background: transparent; color: #8a737a; text-decoration: none;
+  font-size: 14px; font-weight: 400; line-height: 22px;
+}
+.tool-toolbar .tool-home-link:hover { color: #925465; }
+.tool-toolbar :is(.case-actions,.header-actions) { display: flex; gap: 8px; margin-left: auto; }
+.tool-toolbar button {
+  min-height: 36px; padding: 7px 14px; border-radius: 8px;
+  font: 500 13px/20px "PingFang SC",sans-serif;
+  border: 1px solid #e2dadc; background: #fff; color: #79636b;
+}
+.tool-toolbar :is(#save-case,#new-reading) { background: #925465; border-color: #925465; color: #fff; }
+.tool-toolbar .tarot-save-feedback { margin-left: auto; margin-right: 0; }
+@media(max-width:760px) {
+  .tool-savebar.tool-toolbar { margin: -12px -12px 16px; }
+  .tool-toolbar,.tarot-embedded > header.tool-toolbar { padding: 12px; flex-wrap: wrap; }
+}
+
+/* Soft tabletop contact shadow, without the sharp offset bottom edge. */
+.tarot-embedded #table .face {
+  box-shadow: 0 1px 3px rgba(48, 40, 36, .06), 0 5px 12px -4px rgba(48, 40, 36, .14);
+}
+.tarot-embedded #detail-image {
+  box-shadow: 0 2px 5px rgba(48, 40, 36, .05), 0 10px 24px -8px rgba(48, 40, 36, .16);
+}
+
+/* Rotate only the artwork; the light source stays above the card. */
+.tarot-embedded .detail-card-shadow {
+  display: inline-block;
+  max-width: 100%;
+  margin: 20px auto 4px;
+  vertical-align: top;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(48,40,36,.05), 0 10px 24px -8px rgba(48,40,36,.16);
+}
+.tarot-embedded .detail-card-shadow #detail-image {
+  margin: 0;
+  box-shadow: none;
+}

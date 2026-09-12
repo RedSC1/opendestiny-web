@@ -1,0 +1,41 @@
+/* Narrow screens use natural-height sections instead of desktop fixed rows. */
+@media (max-width: 760px) {
+  body.tarot-embedded { display: block; height: auto; min-height: 100dvh; }
+  .tarot-embedded main,
+  .tarot-embedded main.cross-reading { display: flex; flex-direction: column; gap: 16px; padding: 12px; }
+  .tarot-embedded .setup { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px 8px; padding-bottom: 16px; }
+  .tarot-embedded .setup .question { grid-column: 1 / -1; display: grid; gap: 6px; width: 100%; min-width: 0; font-size: 12px; }
+  .tarot-embedded .setup .question input { height: 42px; font-size: 16px; }
+  .tarot-embedded #spread-picker { grid-column: 1; min-width: 0; width: 100%; min-height: 42px; justify-content: space-between; gap: 6px; }
+  .tarot-embedded #spread-current { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tarot-embedded #shuffle { grid-column: 2; grid-row: 2; padding: 8px; white-space: nowrap; }
+  .tarot-embedded #mode { grid-column: 1 / -1; min-width: 0; }
+  .tarot-embedded #mode .segmented { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .tarot-embedded #mode .segmented span { padding: 10px 6px; text-align: center; }
+  .tarot-embedded main .reading { display: grid; position: relative; grid-template-rows: auto minmax(350px,1fr) auto; min-height: 460px; gap: 12px; }
+  .tarot-embedded main .reading > .reading-heading { position: static; min-width: 0; pointer-events: auto; }
+  .tarot-embedded .reading-heading #spread-title { font-size: 15px; }
+  .tarot-embedded #progress { flex-shrink: 0; font-size: 12px; }
+  .tarot-embedded main:not(.cross-reading) #table:not(.many) { gap: 16px; padding: 20px 0 110px; }
+  .tarot-embedded .slot-label { width: calc(var(--cw) + 12px); font-size: 11px; }
+  .tarot-embedded .card-name { width: calc(var(--cw) + 14px); font-size: 14px; overflow-wrap: anywhere; }
+  .tarot-embedded .card-name small { font-size: 11px; }
+  .tarot-embedded .reading-actions { flex-wrap: wrap; height: auto; gap: 10px; padding: 8px 0; }
+  .tarot-embedded .reading-actions #status { width: 100%; text-align: center; font-size: 12px; }
+  .tarot-embedded .result-actions { flex-wrap: wrap; justify-content: center; }
+  .tarot-embedded main .deck-section { display: grid; align-self: stretch; width: 100%; height: 240px; grid-template-rows: auto minmax(0,1fr); gap: 10px; }
+  .tarot-embedded .deck-heading { display: grid; grid-template-columns: minmax(0,1fr) auto; }
+  .tarot-embedded #deck-hint { font-size: 12px; }
+  .tarot-embedded .tool-toolbar .tarot-save-feedback { order: 3; width: 100%; margin: 0; }
+  .tarot-embedded .tarot-save-feedback:has(.tarot-save-status:empty):has(#tarot-save-retry[hidden]) { display: none; }
+  .tool-toolbar button { padding: 7px 10px; }
+  .tool-toolbar .case-actions { gap: 6px; flex-wrap: wrap; }
+  .chart-editor { width: 100%; max-width: 100%; height: 100dvh; max-height: 100dvh; border: 0; border-radius: 0; padding: 18px; }
+  .chart-editor .date-grid,.chart-editor .time-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
+  .chart-editor .field { min-width: 0; }
+  .chart-editor .field input,.chart-editor .field select { font-size: 16px; }
+  .chart-editor .location-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .chart-editor .section-line { flex-wrap: wrap; gap: 10px; }
+  #bazi-app .fortune-level { grid-template-columns: 1fr; gap: 8px; }
+  #bazi-app .chart-panel,#ziwei-app .chart-panel { padding: 10px; }
+}

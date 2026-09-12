@@ -1,0 +1,40 @@
+.chart-json-dialog button{border:1px solid #d8dce8;border-radius:10px;padding:.6rem .9rem;background:#f8fafc;color:#526278;font:inherit;font-size:.85rem;font-weight:600;cursor:pointer;white-space:nowrap}
+.chart-json-trigger{box-sizing:border-box;border:1px solid rgba(100,116,139,.16);border-radius:7px;background:transparent;color:#64748b;font-family:inherit;font-size:.7rem;font-weight:600;line-height:1;cursor:pointer;white-space:nowrap}
+.chart-json-trigger:hover,.chart-json-dialog button:hover{background:#eef2ff;color:#4f46e5}
+.chart-json-trigger:focus-visible{outline:2px solid #818cf8;outline-offset:2px}
+.chart-json-trigger:disabled{opacity:.5;cursor:default}
+/* Compact desktop controls; the mobile grid shares the width without scrolling. */
+#ziwei-app .chart-toolbar{margin-inline-start:auto;gap:.18rem;padding:.2rem;border-radius:10px}
+#ziwei-app .chart-toolbar select,#ziwei-app .chart-toolbar button{height:2rem;border-radius:7px;font-size:.78rem}
+#ziwei-app .chart-toolbar select{width:4rem;padding:0 .3rem}
+#ziwei-app .chart-toolbar .chart-display-mode{width:3.7rem}
+#ziwei-app .chart-toolbar button{width:1.8rem;font-size:.95rem}
+#ziwei-app .chart-toolbar .chart-reset{width:2.5rem;font-size:.72rem}
+#ziwei-app .chart-toolbar .chart-json-trigger{width:2.7rem;background:transparent;color:#64748b;font-size:.68rem;font-weight:600}
+#ziwei-app .chart-tool-divider{margin:0 .05rem;height:1.15rem}
+#bazi-app .chart-header-actions{gap:.25rem}
+#bazi-app .bazi-birth-toolbar{min-width:0;gap:.15rem;padding:.2rem;border-radius:9px}
+#bazi-app .bazi-birth-toolbar button{width:1.8rem;min-width:24px;height:2rem;font-size:.95rem}
+#bazi-app .bazi-birth-toolbar .birth-reset{width:2.5rem;font-size:.72rem}
+#bazi-app .chart-header-actions>.copy-button,#bazi-app .chart-header-actions>.chart-json-trigger{flex:none;box-sizing:border-box;width:2.7rem;height:2rem;padding:0;font:600 .7rem/1 sans-serif;color:#64748b;background:transparent}
+@media(max-width:520px){
+  #ziwei-app .chart-toolbar{box-sizing:border-box;width:100%;display:grid;grid-template-columns:minmax(48px,1.5fr) 1px repeat(2,minmax(24px,1fr)) minmax(34px,1.2fr) repeat(2,minmax(24px,1fr)) minmax(48px,1.5fr) minmax(38px,1.2fr);gap:.125rem;overflow:visible}
+  #ziwei-app .chart-toolbar :is(select,button,.chart-reset,.chart-display-mode,.chart-json-trigger){width:100%;min-width:0;height:2.5rem;padding:0 .1rem}
+  #ziwei-app .chart-tool-divider{margin:0}
+  #bazi-app .bazi-birth-toolbar button{flex:1 1 1.8rem;height:2.5rem}
+  #bazi-app .bazi-birth-toolbar .birth-reset{flex:0 0 2.3rem}
+  #bazi-app .chart-header-actions>.copy-button,#bazi-app .chart-header-actions>.chart-json-trigger{width:2.5rem;height:2.5rem}
+}
+.chart-json-dialog{box-sizing:border-box;width:min(820px,calc(100vw - 2rem));max-height:calc(100dvh - 2rem);margin:auto;padding:1.25rem;border:1px solid #e2e8f0;border-radius:20px;background:#f8fafc;color:#334155;box-shadow:0 24px 80px #0f172a30;overflow:auto;overscroll-behavior:contain}
+.chart-json-dialog::backdrop{background:#0f172a70;backdrop-filter:blur(5px)}
+.chart-json-dialog header{display:flex;align-items:flex-start;gap:1rem;justify-content:space-between}
+.chart-json-dialog h2{margin:0;font:700 1.2rem/1.5 sans-serif}
+.chart-json-dialog p{margin:.4rem 0;color:#64748b;font-size:.82rem;line-height:1.6}
+.chart-json-label{display:block;margin:.9rem 0 .45rem;font-size:.8rem;font-weight:600}
+.chart-json-dialog textarea{box-sizing:border-box;display:block;width:100%;height:min(48dvh,430px);min-height:130px;padding:1rem;border:1px solid #cbd5e1;border-radius:12px;resize:vertical;background:#fff;color:#334155;font:12px/1.6 ui-monospace,monospace;tab-size:2;overflow:auto;overscroll-behavior:contain}
+.chart-json-dialog footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.8rem;margin-top:1rem}
+.chart-json-dialog footer>div{display:flex;gap:.6rem;margin-left:auto}
+.chart-json-dialog [data-download]{background:#6366f1;border-color:#6366f1;color:#fff}
+.chart-json-dialog [data-close]{padding:.25rem .6rem;font-size:1.3rem;line-height:1.3}
+html:has(.chart-json-dialog[open]){overflow:hidden}
+@media(max-width:520px){.chart-json-dialog{padding:1rem}.chart-json-dialog footer>div{width:100%}.chart-json-dialog footer button{flex:1}}

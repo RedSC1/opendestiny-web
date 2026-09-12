@@ -1,0 +1,129 @@
+/* Shared geometry for the QiShuo form, independent of page/global field styles. */
+#qishuo-form .qishuo-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: .7rem;
+}
+
+#qishuo-form .qishuo-field {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  align-self: start;
+  justify-content: flex-start;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  gap: .4rem;
+}
+
+#qishuo-form .qishuo-field[hidden] {
+  display: none;
+}
+
+#qishuo-form .qishuo-field > span:first-child {
+  display: block;
+  flex: none;
+  margin: 0;
+  padding: 0;
+  color: #334155;
+  font-size: .9375rem;
+  font-weight: 800;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+#qishuo-form .qishuo-field > small {
+  display: block;
+  float: none;
+  margin: 0;
+  color: #8da0bb;
+  font-size: .75rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+#qishuo-form .qishuo-field input,
+#qishuo-form .qishuo-field select {
+  display: block;
+  flex: none;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  height: 2.75rem;
+  min-height: 2.75rem;
+  max-height: 2.75rem;
+  margin: 0;
+  padding: 0 .65rem;
+  border: 1px solid rgba(148, 163, 184, .36);
+  border-radius: 9px;
+  outline: none;
+  background: rgba(255, 255, 255, .72);
+  color: #1e293b;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+#qishuo-form .qishuo-field input:focus,
+#qishuo-form .qishuo-field select:focus {
+  border-color: rgba(15, 159, 143, .58);
+  box-shadow: 0 0 0 3px rgba(15, 159, 143, .09);
+}
+
+#qishuo-form .qishuo-field select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 1.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='m3 4.5 3 3 3-3' fill='none' stroke='%2364748b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .55rem center;
+  background-size: .65rem;
+}
+
+#qishuo-form .year-field {
+  grid-column: 1 / -1;
+}
+
+#qishuo-form .year-field input {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+#qishuo-form .offset-picker {
+  display: grid;
+  flex: none;
+  grid-template-columns: 2.75rem minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  height: 2.75rem;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: 0;
+  gap: .3rem;
+}
+
+#qishuo-form .offset-picker input,
+#qishuo-form .offset-picker select {
+  padding: 0 .2rem;
+  text-align: center;
+}
+
+#qishuo-form .offset-picker select {
+  padding: 0 .9rem 0 .25rem;
+  background-position: right .25rem center;
+}
+
+#qishuo-form .offset-picker b {
+  color: #64748b;
+}
+
+@media (min-width: 761px) and (max-width: 1050px) {
+  #qishuo-form .qishuo-form-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  #qishuo-form .year-field {
+    grid-column: auto;
+  }
+}

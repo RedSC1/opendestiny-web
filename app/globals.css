@@ -56,4 +56,230 @@
 @media(max-width:1200px){.desk{padding:35px 30px 20px}.topbar{padding:0 30px}.tool-grid{gap:14px}.tool-card{padding:18px 15px}.tool-bottom p{font-size:12px}.tarot-card{padding:25px}.card-fan{right:-25px;transform:scale(.88);transform-origin:bottom right}.tarot-foot{font-size:8px;left:25px;gap:7px}.tool-top .eyebrow{font-size:8px}}
 @media(max-width:1000px){.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tarot-card{grid-row:auto;min-height:330px}.card-fan{right:10px;bottom:40px;transform:scale(.92)}.tool-visual{height:115px}.tarot-copy p{max-width:150px}.page-heading h1{font-size:30px}.heading-note{display:none}.tool-top .eyebrow{font-size:10px}}
 @media(max-width:767px){.topbar [data-slot=sidebar-trigger]{display:flex}.topbar{height:60px;padding:0 20px}.topbar>div{gap:12px}.edition{font-size:10px}.desk{padding:30px 20px 20px}.page-heading{margin-bottom:30px}.page-heading h1{font-size:29px}.eyebrow{font-size:9px}.section-heading>span{font-size:10px}.tarot-card{min-height:360px;padding:25px}.tarot-copy h2{font-size:26px}.tarot-copy h2 span{font-size:17px}.card-fan{right:-7px;bottom:33px;transform:scale(.76)}.tarot-copy p{max-width:125px}.tarot-foot{font-size:8px}.personal-strip{gap:12px}.personal-strip p{max-width:210px;line-height:1.6}.personal-strip button{white-space:nowrap;font-size:12px}.small-icon{display:none}.workspace-sidebar [data-slot=sidebar-inner]{padding:20px}}
+@media(max-height:820px){
+  .workspace-sidebar [data-slot=sidebar-inner]{padding-top:16px;padding-bottom:8px}
+  .workspace-sidebar .brand{margin:0 5px 12px}
+  .workspace-sidebar .nav-label{margin:8px 12px 4px}
+  .workspace-sidebar [data-slot=sidebar-menu-button]{height:34px}
+  .workspace-sidebar .back-home{margin-top:7px;padding:10px 12px 4px}
+}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}html[data-motion=off] *,html[data-motion=off] *::before{transition:none!important;animation:none!important}
+.brand{border:0;background:transparent;text-align:left;padding:0;cursor:pointer}.featured-setting{display:flex;align-items:center;gap:7px;border:0;background:transparent;font-size:12px;color:#89747c}.tool-card{text-align:left}.tarot-copy p{max-width:250px}.featured-bazi{background:radial-gradient(ellipse at 80% 80%,#e5ddcc,transparent 70%),#f3efe8}.featured-ziwei{background:radial-gradient(ellipse at 80% 80%,#e2dbe9,transparent 70%),#f0ecf3}.featured-calendar{background:#eef0e8}.featured-qishuo{background:#e9eff1}.featured-visual{position:absolute;bottom:85px;right:22%;transform:scale(2);transform-origin:center}.featured-visual .pillars{gap:20px}.mini-tarot{display:flex;gap:4px}.mini-tarot img{border:3px solid #fffaf0;box-shadow:0 4px 10px #35202815;border-radius:4px;object-fit:cover;transform:rotate(-9deg)}.mini-tarot img+img{transform:rotate(11deg);margin-left:-12px}.view-loading{padding:50px}.workspace-error{margin:15px 30px}.error-text{color:#a94354;font-size:14px;line-height:1.7;background:#fff1f1;padding:12px;border-radius:8px}.tool-workspace{position:relative}.workbench-bar{display:flex;align-items:center;gap:20px;padding:17px 25px;border-bottom:1px solid var(--border)}.workbench-bar button{display:flex;align-items:center;gap:7px;font-size:13px;border:0;background:transparent;color:#8a737a}.workbench-bar h1{font-size:17px;font-weight:500;margin:0}.workbench-bar>span{margin-left:auto;color:#9a9696;font-size:12px}.tool-workspace iframe{display:block;width:100%;height:calc(100dvh - 138px);border:0;visibility:hidden;min-height:550px}.tool-workspace iframe.ready{visibility:visible}.tool-loading{position:absolute;top:110px;left:5%;width:90%;padding:25px;display:flex;flex-direction:column;gap:22px;color:#898182;font-size:14px}.tool-loading button{display:flex;align-items:center;gap:10px;color:#925465}.records-page{max-width:1380px;margin:auto;padding:45px 50px}.records-heading{display:flex;justify-content:space-between;align-items:center;gap:20px}.records-heading h1{font-size:32px;font-weight:450;margin:12px 0}.records-heading h1 span{font-size:15px;color:#ac8b95;margin-left:15px;vertical-align:middle}.records-heading>div>p:last-child{font-size:14px;color:#8a8584}.quiet-danger{display:flex;align-items:center;gap:7px;border:1px solid #e0d9d8;background:transparent;border-radius:7px;padding:9px 12px;font-size:13px;color:#9b6f79}.quiet-danger:disabled{opacity:.4;cursor:default}.records-toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:30px 0 22px}.records-toolbar>span{display:flex;align-items:center;gap:8px;font-size:13px;color:#8c8785}.record-create{display:flex;gap:18px}.record-create button{display:flex;align-items:center;gap:6px;background:none;border:0;color:#925465;font-size:13px}.records-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.saved-card{background:white;border:1px solid #e6e1dd;border-radius:13px;padding:20px;overflow:hidden}.saved-meta{display:flex;justify-content:space-between;align-items:center;color:#a1848d;font-size:12px}.saved-meta>span{background:#f5f0f1;padding:5px 8px;border-radius:4px}.saved-meta button{border:0;background:transparent;color:#b2a6a7;padding:5px}.saved-open{display:block;width:100%;border:0;background:none;text-align:left;padding:0}.saved-open h2{font-size:19px;font-weight:500;line-height:1.6;margin:17px 0;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.saved-open>p{color:#918a88;font-size:12px;line-height:1.7}.saved-open time{display:flex;align-items:center;gap:6px;font-size:12px;color:#aaa09c;margin:20px 0 16px}.saved-action{display:flex;justify-content:space-between;align-items:center;width:100%;border:0;border-top:1px solid #eee8e5;padding:14px 0 0;background:none;font-size:13px;color:#8f6472}.history-cards{display:flex;gap:6px;overflow:hidden}.history-cards>span{min-width:60px;padding:8px;flex:1;border:1px solid #eae2df;border-radius:5px;font-family:Georgia,serif;font-size:12px;line-height:1.2;color:#8f777c;background:#faf7f3}.history-cards small{display:block;font-size:10px;margin-top:10px;color:#b2989e}.records-empty{min-height:340px;border:1px dashed #ddd4d1;background:#f7f5f1;color:#9b8f8b}.records-empty [data-slot=empty-title]{font-size:19px;color:#65595b;margin-top:15px}.records-local{font-size:12px;color:#a39994;margin-top:24px}.setting-block{display:flex;flex-direction:column;gap:12px;margin-top:20px}.setting-block label{font-size:15px}.setting-block [data-slot=select-trigger]{width:100%;height:42px}.setting-block p,.storage-note p{font-size:13px;line-height:1.8;color:#8d8584}.storage-note{display:flex;align-items:flex-start;gap:10px;padding:14px;background:#f6f3ef;border-radius:8px}.storage-note svg{flex-shrink:0;margin-top:4px;color:#a5948b}.storage-note p{margin:0}.record-detail{max-width:900px!important;max-height:90dvh;overflow:auto;padding:28px!important}.detail-cards{display:flex;justify-content:center;flex-wrap:wrap;gap:22px}.detail-cards figure{width:150px;margin:0}.detail-cards img{width:150px;height:auto;aspect-ratio:7/12;border-radius:6px}.detail-cards img.reversed{transform:rotate(180deg)}.detail-cards figcaption{text-align:center;display:flex;flex-direction:column;gap:7px;padding:14px 0;font-size:13px}.detail-cards figcaption span,.detail-cards figcaption small{color:#9a818a}.detail-cards b{font-weight:500}.record-description{font-size:14px;color:#857c7b;line-height:1.8}.record-detail pre{max-height:360px;overflow:auto;background:#f5f2ef;padding:15px;font-size:12px}.record-detail summary{font-size:14px;cursor:pointer;margin-top:20px}@media(max-width:1200px){.records-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.records-page{padding:35px 28px}}@media(max-width:1000px){.featured-visual{bottom:100px;right:17%;transform:scale(1.6)}.tarot-copy p{max-width:230px}}@media(max-width:767px){.records-page{padding:28px 20px}.records-heading{align-items:flex-start}.records-heading h1{font-size:27px}.records-heading>div>p:last-child{font-size:13px}.quiet-danger{font-size:12px;white-space:nowrap;padding:8px}.records-toolbar{align-items:flex-start;flex-direction:column}.records-grid{grid-template-columns:1fr}.record-create{align-self:flex-end}.workbench-bar{padding:14px;gap:12px}.workbench-bar>span{display:none}.tool-workspace iframe{height:calc(100dvh - 115px)}.tarot-copy p{max-width:165px}.featured-visual{right:18%;bottom:88px;transform:scale(1.3)}}
+
+/* OpenDestiny product mark shared with the Flutter application. */
+.brand {
+  gap: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: .2px;
+}
+.brand-mark {
+  flex: 0 0 41px;
+  width: 41px;
+  height: 41px;
+  object-fit: cover;
+  background: #070c19;
+  border: 1px solid #403066;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(26, 17, 52, .12);
+}
+.brand-copy { white-space: nowrap; }
+.brand small {
+  margin-top: 6px;
+  color: #96908f;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 1.4px;
+}
+.language-switcher{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 4px 10px;padding:7px 8px;border:1px solid #e2dedc;border-radius:9px;background:#f8f7f4;color:#797674;font-size:11px}.language-switcher>span{display:flex;align-items:center;gap:6px}.language-switcher>fieldset{display:flex;margin:0;padding:2px;border:0;background:#ece9e6;border-radius:7px}.language-switcher button{border:0;border-radius:5px;background:transparent;color:#8a8583;padding:4px 7px;font-size:11px;line-height:1.2}.language-switcher button[aria-pressed=true]{background:#fff;color:#8c4f60;box-shadow:0 1px 4px #4a303014}
+.heading-note { transform: rotate(-4deg); }
+
+/* Keep the featured copy, artwork and caption in separate layout rows. */
+.tarot-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.tarot-copy { flex: 0 0 auto; }
+.tarot-copy p { max-width: 28em; }
+.card-fan {
+  position: relative;
+  inset: auto;
+  align-self: center;
+  flex: 0 0 270px;
+  width: min(100%, 320px);
+  height: 270px;
+  margin-top: auto;
+  transform: none;
+}
+.card-fan .playing-card {
+  width: 39%;
+  height: auto;
+  aspect-ratio: 7 / 12;
+}
+.card-fan .card-0 { left: 5%; }
+.card-fan .card-1 { left: 33%; }
+.card-fan .card-2 { left: 58%; }
+.featured-visual {
+  position: relative;
+  inset: auto;
+  display: grid;
+  place-items: center;
+  flex: 1 0 240px;
+  min-height: 240px;
+  margin-top: auto;
+  transform: none;
+}
+.featured-visual > * { transform: scale(1.7); }
+.tarot-foot {
+  position: static;
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+  line-height: 1.6;
+}
+@media (max-width: 1000px) and (min-width: 600px) {
+  .tarot-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    column-gap: 32px;
+    row-gap: 24px;
+  }
+  .card-fan { width: 100%; margin-top: 12px; }
+  .featured-visual { min-height: 240px; margin-top: 0; }
+  .tarot-foot { grid-column: 1 / -1; }
+}
+@media (max-width: 599px) {
+  .tarot-card { gap: 28px; }
+  .card-fan { flex-basis: 250px; height: 250px; }
+  .featured-visual { flex-basis: 220px; min-height: 220px; }
+}
+
+/* Preserve the standalone tarot table's card sizes inside the workspace shell. */
+.tool-workspace[data-tool="tarot"] iframe {
+  height: 100dvh;
+  min-height: 850px;
+}
+.tool-workspace[data-tool="bazi"] iframe,
+.tool-workspace[data-tool="ziwei"] iframe { height: 100dvh; }
+.case-chart-links { display:flex; gap:20px; border-top:1px solid #eee8e5; padding-top:14px; }
+.case-chart-links button { display:flex; align-items:center; gap:6px; border:0; background:none; padding:4px 0; font-size:13px; color:#925465; cursor:pointer; }
+.case-chart-links button:hover { color:#663e4a; }
+.tool-workspace[data-tool="calendar"] iframe,
+.tool-workspace[data-tool="qishuo"] iframe { height:100dvh; }
+.standalone-case-editor { display:grid; gap:16px; }
+.standalone-case-editor label { display:grid; gap:7px; color:#65595f; font-size:13px; }
+.case-form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.case-form-grid.three { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.standalone-case-editor :is(input,select) { width:100%; min-width:0; height:40px; padding:8px 10px; border:1px solid #e2dadc; border-radius:8px; background:white; color:#454047; }
+.standalone-case-editor p { margin:0; font-size:12px; color:#9a8e94; }
+.case-save-primary { padding:11px; border:0; border-radius:8px; background:#925465; color:white; cursor:pointer; }
+
+/* Case-library backup and browser-storage guidance. */
+.case-file-input { display:none; }
+.records-page .record-create { gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+.records-page .record-create button {
+  min-height:38px;
+  padding:8px 12px;
+  border:1px solid #ded5d6;
+  border-radius:9px;
+  background:#fff;
+  color:#80515e;
+  font-weight:500;
+}
+.records-page .record-create button:hover { border-color:#b9959e; background:#faf6f7; }
+.records-page .record-create button:disabled { opacity:.42; cursor:default; }
+.records-page .record-create .record-add { border-color:#925465; background:#925465; color:#fff; }
+.records-page .record-create .record-add:hover { background:#804758; color:#fff; }
+.browser-storage-alert {
+  margin:0 0 24px;
+  padding:15px 17px;
+  border-color:#ded5cd;
+  background:#f7f4ef;
+  color:#665c58;
+}
+.browser-storage-alert > svg { color:#9a6d77; }
+.browser-storage-alert [data-slot=alert-title] { font-size:13px; }
+.browser-storage-alert [data-slot=alert-description] { margin-top:3px; color:#8b817d; font-size:12px; line-height:1.75; }
+.success-text { display:block; margin:0 0 20px; padding:11px 13px; border-radius:8px; background:#eff6f1; color:#55715d; font-size:13px; }
+.import-dialog { max-width:650px!important; }
+.import-summary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:18px 0; }
+.import-summary > div { padding:15px 12px; border:1px solid #e7e0dd; border-radius:10px; background:#faf8f5; }
+.import-summary strong { display:block; color:#554b4d; font-family:Georgia,"Songti SC",serif; font-size:25px; font-weight:400; }
+.import-summary span { display:block; margin-top:5px; color:#948a87; font-size:11px; }
+.import-duplicate-note { margin:0; color:#918682; font-size:12px; line-height:1.7; }
+.import-duplicate-note { margin-top:14px; }
+.import-confirm { width:100%; margin-top:16px; padding:11px 16px; border:0; border-radius:9px; background:#925465; color:#fff; font-weight:600; }
+@media(max-width:767px){
+  .records-page .records-toolbar { gap:12px; }
+  .records-page .record-create { width:100%; align-self:stretch; justify-content:stretch; }
+  .records-page .record-create button { flex:1; justify-content:center; white-space:nowrap; }
+  .records-page .record-create .record-add { flex-basis:100%; }
+  .browser-storage-alert { margin-bottom:20px; }
+  .import-summary { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+
+/* The original tarot artwork already contains its own printed border. */
+.playing-card { border:0; border-radius:5px; box-shadow:0 10px 18px #4c323424; }
+.mini-tarot img { border:0; border-radius:3px; }
+
+/* About this workspace. */
+.about-page { width:min(100%,1120px); margin:0 auto; padding:46px 50px 70px; }
+.about-hero { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:48px; align-items:end; padding-bottom:34px; border-bottom:1px solid #e6e2de; }
+.about-hero h1 { margin:12px 0 14px; font-size:36px; font-weight:450; letter-spacing:.5px; }
+.about-hero>div>p:last-child { max-width:680px; margin:0; color:#837e7b; font-size:14px; line-height:1.9; }
+.about-links { display:flex; flex-direction:column; min-width:190px; border-top:1px solid #e5dfdc; }
+.about-links a { display:grid; grid-template-columns:18px 1fr 14px; gap:9px; align-items:center; padding:11px 3px; border-bottom:1px solid #e5dfdc; color:#756d6c; font-size:12px; }
+.about-links a svg:first-child { color:#9b6f79; }
+.about-links a svg:last-child { width:13px; color:#aaa09e; }
+.about-links a:hover { color:#814e5d; }
+.about-principles { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin:28px 0 48px; }
+.about-principles [data-slot=card] { gap:0; padding:0; border:1px solid #e7e2df; box-shadow:none; }
+.about-principles [data-slot=card-header] { display:flex; flex-direction:row; align-items:center; gap:10px; padding:19px 19px 10px; }
+.about-principles [data-slot=card-header]>svg { width:18px; color:#9a6674; }
+.about-principles [data-slot=card-title] { font-size:14px; font-weight:600; }
+.about-principles [data-slot=card-content] { padding:0 19px 20px; color:#8b8581; font-size:12px; line-height:1.8; }
+.about-kicker { margin:0 0 7px; color:#a17a84; font-size:10px; font-weight:600; letter-spacing:1.7px; }
+.about-notice { display:grid; grid-template-columns:38px 1fr; gap:17px; padding:23px 25px; border:1px solid #e4d7d3; border-radius:13px; background:#f7f2ef; }
+.about-notice>span { display:grid; place-items:center; width:34px; height:34px; border:1px solid #caaeb2; border-radius:50%; color:#945b69; font-family:Georgia,serif; font-style:italic; }
+.about-notice h2,.about-source-section h2,.about-license h2 { margin:0 0 10px; font-size:21px; font-weight:500; }
+.about-notice p:not(.about-kicker) { max-width:850px; margin:0; color:#7f7774; font-size:13px; line-height:1.85; }
+.about-notice p+p { margin-top:7px!important; }
+.about-source-section { margin-top:48px; }
+.about-section-heading { display:flex; justify-content:space-between; gap:30px; align-items:end; margin-bottom:18px; }
+.about-section-heading>p { max-width:390px; margin:0; color:#9a9390; font-size:12px; line-height:1.7; text-align:right; }
+.about-source-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.about-source-card { gap:0; padding:0; border:1px solid #e7e2df; box-shadow:none; }
+.about-source-card [data-slot=card-header] { gap:5px; padding:21px 21px 8px; }
+.about-source-card [data-slot=card-title] { font-size:17px; font-weight:500; }
+.about-source-card [data-slot=card-content] { display:flex; flex-direction:column; height:100%; padding:5px 21px 21px; }
+.about-source-index { color:#b28993; font-family:Georgia,serif; font-size:12px; }
+.about-source-card p { margin:0; color:#847d79; font-size:12px; line-height:1.85; }
+.about-source-links { display:flex; flex-wrap:wrap; gap:7px; margin-top:auto; padding-top:18px; }
+.about-source-links a { display:inline-flex; align-items:center; gap:4px; padding:6px 9px; border:1px solid #e1d8d8; border-radius:7px; color:#865565; font-size:11px; }
+.about-source-links a:hover { border-color:#c59faa; background:#faf5f6; }
+.about-source-links svg { width:11px; }
+.about-license { display:grid; grid-template-columns:38px 1fr; gap:17px; margin-top:18px; padding:25px; border:1px solid #e5e1dd; border-radius:13px; background:#fff; }
+.about-license>svg { width:21px; color:#9a757d; }
+.about-license p:not(.about-kicker) { max-width:900px; margin:0; color:#807976; font-size:12px; line-height:1.85; }
+.about-warranty { margin-top:12px!important; padding-top:12px; border-top:1px solid #eee9e6; color:#99908d!important; }
+@media(max-width:900px){
+  .about-page { padding:36px 28px 60px; }
+  .about-hero { grid-template-columns:1fr; gap:24px; }
+  .about-links { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .about-links a { grid-template-columns:18px 1fr; border:1px solid #e5dfdc; border-right:0; padding:10px; }
+  .about-links a:last-child { border-right:1px solid #e5dfdc; }
+  .about-links a svg:last-child { display:none; }
+  .about-principles { grid-template-columns:1fr; }
+}
+@media(max-width:600px){
+  .about-page { padding:28px 20px 48px; }
+  .about-hero h1 { font-size:29px; }
+  .about-links { grid-template-columns:1fr; }
+  .about-links a { border-right:1px solid #e5dfdc; border-bottom:0; }
+  .about-links a:last-child { border-bottom:1px solid #e5dfdc; }
+  .about-source-grid { grid-template-columns:1fr; }
+  .about-section-heading { display:block; }
+  .about-section-heading>p { margin-top:8px; text-align:left; }
+  .about-notice,.about-license { grid-template-columns:1fr; padding:20px; }
+}

@@ -1,0 +1,49 @@
+.reverse-lookup-tools{gap:.5rem}.reverse-lookup-tool-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}
+.reverse-lookup-trigger{width:100%;min-height:2.55rem;padding:.45rem .65rem;border:1px solid rgba(99,102,241,.2);border-radius:9px;background:rgba(255,255,255,.66);color:#5965d8;font:inherit;font-size:.76rem;font-weight:800;white-space:nowrap;cursor:pointer}
+.current-datetime-button{display:flex;width:100%;min-height:3.2rem;box-sizing:border-box;align-items:center;justify-content:space-between;gap:.7rem;padding:.58rem .65rem .58rem .78rem;border:1px solid rgba(20,184,166,.2);border-radius:11px;background:linear-gradient(110deg,rgba(20,184,166,.07),rgba(99,102,241,.06));color:#40546c;font:inherit;text-align:left;cursor:pointer}.current-datetime-button>span{display:grid;min-width:0;flex:1;gap:.12rem}.current-datetime-button b{font-size:.76rem;font-weight:850;line-height:1.3;white-space:nowrap}.current-datetime-button small{color:#7689a2;font-size:.6rem;font-weight:700;line-height:1.35;white-space:nowrap}.current-datetime-button i{display:flex;width:1.75rem;height:1.75rem;align-items:center;justify-content:center;flex:none;border-radius:8px;background:rgba(255,255,255,.62);color:#5f6fd7;font-size:.85rem;font-style:normal}.current-datetime-button:hover{border-color:rgba(20,184,166,.38);background:linear-gradient(110deg,rgba(20,184,166,.11),rgba(99,102,241,.09))}
+.reverse-lookup-dialog{position:fixed;inset:0;width:min(760px,calc(100vw - 2rem));max-width:none;max-height:min(820px,calc(100dvh - 2rem));margin:auto;padding:0;overflow:hidden;border:1px solid rgba(255,255,255,.85);border-radius:24px;background:rgba(247,248,255,.96);color:#263449;box-shadow:0 30px 90px rgba(15,23,42,.32)}
+.reverse-lookup-dialog::backdrop{background:rgba(15,23,42,.48);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.reverse-lookup-card{display:flex;max-height:min(820px,calc(100dvh - 2rem));flex-direction:column}
+.reverse-lookup-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:1.15rem 1.25rem .85rem;border-bottom:1px solid rgba(100,116,139,.13)}
+.reverse-lookup-header h2{margin:0 0 .25rem;font-size:1.25rem}.reverse-lookup-header p{margin:0;color:#718096;font-size:.78rem}
+.reverse-lookup-close{width:2.15rem;height:2.15rem;flex:none;border:0;border-radius:50%;background:rgba(100,116,139,.09);color:#64748b;font-size:1.25rem;cursor:pointer}
+.reverse-lookup-body{display:grid;gap:.9rem;padding:1rem 1.25rem;overflow-y:auto;overscroll-behavior:contain}
+.reverse-lookup-search-form{display:grid;gap:.9rem}
+.reverse-lookup-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}
+.reverse-lookup-field{display:grid;gap:.35rem}.reverse-lookup-field>span,.reverse-lookup-pillar>span{color:#435168;font-size:.78rem;font-weight:800}
+.reverse-lookup-field input,.reverse-lookup-field select,.reverse-lookup-pillar select{box-sizing:border-box;width:100%;min-height:2.65rem;padding:.55rem .7rem;border:1px solid rgba(148,163,184,.34);border-radius:11px;background:#fff;color:#253247;font:inherit}
+.reverse-lookup-pillars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}
+.reverse-lookup-pillar{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}.reverse-lookup-pillar>span{grid-column:1/-1}
+.reverse-lookup-optional{display:flex;align-items:center;gap:.45rem;grid-column:1/-1;color:#526278;font-size:.8rem;font-weight:700}.reverse-lookup-optional input{width:1.05rem;height:1.05rem}
+.reverse-lookup-actions{display:flex;align-items:center;justify-content:flex-end;gap:.65rem}.reverse-lookup-actions button{min-height:2.7rem;padding:.55rem 1rem;border:0;border-radius:11px;font:inherit;font-weight:800;cursor:pointer}.reverse-lookup-submit{background:linear-gradient(120deg,#14a89b,#6366f1);color:#fff}.reverse-lookup-cancel{background:rgba(100,116,139,.1);color:#526278}
+.reverse-lookup-status{min-height:1.2em;margin:0;color:#64748b;font-size:.78rem}.reverse-lookup-status.error{color:#c62828}
+.reverse-lookup-results{display:grid;gap:.55rem}.reverse-lookup-result{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:.75rem;padding:.7rem .8rem;border:1px solid rgba(148,163,184,.22);border-radius:13px;background:rgba(255,255,255,.72)}
+.reverse-lookup-result strong{display:block;font-size:.88rem}.reverse-lookup-result p{margin:.18rem 0 0;color:#64748b;font-size:.72rem;line-height:1.45}.reverse-lookup-result button{padding:.45rem .7rem;border:1px solid rgba(99,102,241,.2);border-radius:9px;background:#fff;color:#5965d8;font:inherit;font-size:.75rem;font-weight:800;cursor:pointer}
+@media(max-width:600px){.reverse-lookup-dialog{width:calc(100vw - 1rem);max-height:calc(100dvh - 1rem);border-radius:18px}.reverse-lookup-card{max-height:calc(100dvh - 1rem)}.reverse-lookup-header,.reverse-lookup-body{padding-inline:.85rem}.reverse-lookup-fields,.reverse-lookup-pillars{grid-template-columns:1fr}.reverse-lookup-result{grid-template-columns:1fr}.reverse-lookup-result button{justify-self:end}}
+
+/* Compact reverse-lookup surface. */
+.reverse-lookup-dialog{width:min(680px,calc(100vw - 2rem));max-height:min(760px,calc(100dvh - 2rem));border-radius:22px;background:linear-gradient(145deg,rgba(250,251,255,.98),rgba(243,244,252,.97));font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",sans-serif;box-shadow:0 28px 80px rgba(15,23,42,.3),inset 0 1px rgba(255,255,255,.9)}
+.reverse-lookup-card{max-height:min(760px,calc(100dvh - 2rem))}
+.reverse-lookup-header{display:grid;grid-template-columns:44px minmax(0,1fr) 34px;align-items:center;gap:.8rem;padding:1rem 1.1rem .9rem;background:linear-gradient(110deg,rgba(129,140,248,.08),rgba(244,114,182,.045))}
+.reverse-lookup-emblem{display:flex;width:44px;height:44px;align-items:center;justify-content:center;border:1px solid rgba(99,102,241,.16);border-radius:14px;background:rgba(255,255,255,.68);color:#6366f1;font-size:1.15rem;font-weight:900;box-shadow:0 6px 18px rgba(99,102,241,.09)}
+.reverse-lookup-header h2{margin:0 0 .18rem;font-family:inherit;font-size:1.13rem;line-height:1.2}.reverse-lookup-header p{font-size:.72rem;line-height:1.45}
+.reverse-lookup-close{display:flex;width:34px;height:34px;align-items:center;justify-content:center;padding:0;border-radius:11px;font-size:1.05rem}
+.reverse-lookup-body{gap:.75rem;padding:.9rem 1.1rem 1.05rem}.reverse-lookup-search-form{gap:.78rem}
+.reverse-lookup-pillars{grid-template-columns:repeat(4,minmax(0,1fr));gap:.55rem}
+.reverse-lookup-pillar{display:grid;grid-template-columns:1fr 1fr;gap:.38rem;padding:.62rem;border:1px solid rgba(148,163,184,.2);border-radius:13px;background:rgba(255,255,255,.68);box-shadow:0 5px 15px rgba(51,65,85,.04)}
+.reverse-lookup-pillar-heading{display:flex;grid-column:1/-1;align-items:center;justify-content:space-between;gap:.3rem;min-height:1.25rem;color:#435168;font-size:.73rem;font-weight:850}
+.reverse-lookup-hour-toggle{display:flex;align-items:center;gap:.22rem;color:#6b7f9c;font-size:.62rem;font-weight:750;cursor:pointer}.reverse-lookup-hour-toggle input{width:.85rem;height:.85rem;margin:0;accent-color:#6366f1}
+.reverse-lookup-field{gap:.28rem}.reverse-lookup-field>span{color:#526278;font-size:.69rem}
+.reverse-lookup-field input,.reverse-lookup-field select,.reverse-lookup-pillar select{min-height:2.42rem;padding:.42rem .55rem;border-radius:9px;outline:none;background:rgba(255,255,255,.94);transition:border-color .15s,box-shadow .15s}
+.reverse-lookup-pillar select{padding-inline:.4rem;color:#263449;font-size:1rem;font-weight:800;text-align:center}.reverse-lookup-pillar select:disabled{opacity:.38;filter:saturate(.4)}
+.reverse-lookup-field input:focus,.reverse-lookup-field select:focus,.reverse-lookup-pillar select:focus{border-color:rgba(99,102,241,.52);box-shadow:0 0 0 3px rgba(99,102,241,.09)}
+.reverse-lookup-range{min-width:0;margin:0;padding:.55rem .7rem .62rem;border:1px solid rgba(99,102,241,.12);border-radius:13px;background:rgba(99,102,241,.035)}
+.reverse-lookup-range legend{padding:0 .35rem;color:#44536a;font-size:.72rem;font-weight:850}.reverse-lookup-range .reverse-lookup-fields{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:end;gap:.55rem}.reverse-lookup-range .reverse-lookup-field input{min-height:2.36rem;font-size:.86rem;font-weight:700}.reverse-lookup-range i{display:flex;height:2.36rem;align-items:center;color:#9aa8bb;font-size:.85rem;font-style:normal}.reverse-lookup-range p{margin:.42rem 0 0;color:#8796aa;font-size:.63rem;line-height:1.4}
+.reverse-lookup-star-fields{grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem}.reverse-lookup-star-fields .reverse-lookup-field{padding:.55rem;border:1px solid rgba(148,163,184,.18);border-radius:11px;background:rgba(255,255,255,.55)}
+.reverse-lookup-actions{gap:.55rem}.reverse-lookup-actions button{min-height:2.45rem;padding:.5rem .9rem;border-radius:10px;font-size:.78rem}.reverse-lookup-submit{min-width:7rem;box-shadow:0 7px 16px rgba(79,70,229,.16)}
+.reverse-lookup-status{font-size:.72rem}.reverse-lookup-status:empty{display:none}.reverse-lookup-result strong{font-size:.8rem}.reverse-lookup-result p{font-size:.67rem}
+@media(max-width:600px){
+  .reverse-lookup-dialog{width:calc(100vw - .75rem);max-height:calc(100dvh - .75rem);border-radius:17px}.reverse-lookup-card{max-height:calc(100dvh - .75rem)}
+  .reverse-lookup-header{grid-template-columns:38px minmax(0,1fr) 32px;gap:.65rem;padding:.8rem}.reverse-lookup-emblem{width:38px;height:38px;border-radius:12px;font-size:1rem}.reverse-lookup-header h2{font-size:1rem}.reverse-lookup-header p{font-size:.65rem}.reverse-lookup-body{padding:.72rem .8rem .85rem}
+  .reverse-lookup-pillars{grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem}.reverse-lookup-pillar{padding:.52rem}.reverse-lookup-star-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+}

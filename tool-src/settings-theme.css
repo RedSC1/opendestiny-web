@@ -1,0 +1,167 @@
+/* Shared settings surface for all three embedded tools. */
+:is(.chart-editor, #settings, #spread-dialog, #confirm) {
+  --primary: #925465;
+  --surface: #fafaf8;
+  --on-surface: #303036;
+  --on-surface-variant: #8d8584;
+  --outline-variant: #e6dfdf;
+  width: min(680px, calc(100vw - 32px));
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 40px);
+  margin: auto;
+  border: 1px solid #e6dfdf;
+  border-radius: 16px;
+  background: #fafaf8;
+  color: #303036;
+  box-shadow: 0 20px 70px #39252f24;
+  font: 14px/1.6 "PingFang SC", "Microsoft YaHei", sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: #c7b8be transparent;
+}
+:is(.chart-editor, #settings, #spread-dialog, #confirm)::backdrop { background: #33283066; backdrop-filter: blur(3px); }
+.chart-editor { padding: 24px; }
+.chart-editor[open] {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+  overflow: hidden;
+}
+:is(#settings, #spread-dialog, #confirm) { padding: 0; }
+:is(#settings, #spread-dialog, #confirm) .dialog-scroll { padding: 24px; max-height: calc(100dvh - 42px); }
+:is(.chart-editor, #settings, #spread-dialog, #confirm) h2 { margin: 0; color: #303036; font: 500 20px/1.4 "PingFang SC", sans-serif; }
+:is(.chart-editor, #settings, #spread-dialog, #confirm) h3,
+:is(.chart-editor, #settings) legend,
+#card-catalog summary { color: #65595f; font-size: 14px; font-weight: 500; }
+:is(.chart-editor, #settings, #spread-dialog, #confirm) p,
+.chart-editor :is(.field-help, .calendar-help) { color: #8d8584; font-size: 12px; font-weight: 400; line-height: 1.7; }
+.chart-editor :is(.field > span, .section-label) { color: #65595f; font-size: 13px; font-weight: 500; }
+.chart-editor :is(.field input, .field select), #free-count {
+  width: 100%; min-height: 40px; height: 40px; padding: 8px 12px;
+  border: 1px solid #e2dadc; border-radius: 8px; background: #fff; color: #454047;
+  font: 400 14px/1.4 "PingFang SC", sans-serif; box-shadow: none;
+}
+.chart-editor :is(.field input, .field select):focus-visible, #free-count:focus-visible { outline: 2px solid #bc96a4; outline-offset: 2px; }
+.chart-editor :is(.advanced-body, .form-section) { gap: 10px; }
+.chart-editor .advanced-body { margin-top: 0; gap: 16px; }
+.chart-editor .form-section { border-color: #ebe5e7; }
+.chart-editor :is(.segmented, .mini-segmented) { border: 1px solid #ebe3e6; border-radius: 9px; background: #f3eeef; padding: 3px; }
+.chart-editor :is(.segmented, .mini-segmented) span { min-height: 32px; color: #8d7d83; font-size: 13px; font-weight: 400; }
+.chart-editor :is(.segmented, .mini-segmented) input:checked + span { background: #fff; color: #925465; box-shadow: 0 1px 3px #39252f10; }
+:is(.chart-editor, #settings) input:is([type=checkbox], [type=radio]) { accent-color: #925465; }
+.chart-editor .check-row { color: #65595f; font-size: 13px; font-weight: 400; line-height: 1.6; }
+:is(.chart-editor, #settings, #spread-dialog, #confirm) :is(.primary, .calculate-button, .tonal) {
+  min-height: 40px; padding: 9px 16px; border: 1px solid #925465; border-radius: 8px;
+  background: #925465; color: #fff; font-size: 14px; font-weight: 500; box-shadow: none;
+}
+:is(.chart-editor, #settings, #spread-dialog, #confirm) :is(.outline, .presets button, .reverse-lookup-trigger) {
+  min-height: 36px; padding: 7px 12px; border: 1px solid #e2dadc; border-radius: 8px;
+  background: #fff; color: #79636b; font-size: 13px; font-weight: 400; box-shadow: none;
+}
+:is(.editor-close, #settings-close, #spread-close) { display: grid; place-items: center; width: 32px; height: 32px; min-height: 32px !important; padding: 0 !important; border: 0 !important; border-radius: 8px; background: transparent !important; color: #8b747e; font-size: 0 !important; position: relative; flex-shrink: 0; }
+:is(.editor-close, #settings-close, #spread-close):hover { background: #f1e9ec !important; }
+:is(.editor-close, #settings-close, #spread-close)::before,
+:is(.editor-close, #settings-close, #spread-close)::after {
+  content: ''; position: absolute; top: 50%; left: 50%;
+  width: 16px; height: 2px; border-radius: 1px; background: currentColor;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+:is(.editor-close, #settings-close, #spread-close)::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+#settings .presets { margin: 18px 0; gap: 8px; }
+#settings label { min-height: 36px; padding: 6px; gap: 8px; color: #65595f; font-size: 13px; }
+#settings .catalog-grid input { width: 16px; height: 16px; flex-basis: 16px; }
+#settings .catalog-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 4px 12px; }
+#card-catalog details { padding: 14px 0; border-color: #e6dfdf; }
+#settings .speed-options span { padding: 10px 12px; border-radius: 8px; border-color: #e2dadc; font-size: 13px; }
+#settings .speed-options input:checked + span { color: #925465; border-color: #bc96a4; background: #f6edef; }
+#settings .settings-bottom { position: sticky; bottom: -24px; padding: 16px 0; margin-top: 12px; background: #fafaf8; border-color: #e6dfdf; }
+#animation-settings { margin: 20px 0; padding-bottom: 18px; }
+#spread-options { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; }
+#spread-options .spread-option { border-radius: 10px; }
+@media(max-width:520px) {
+  .chart-editor, :is(#settings,#spread-dialog,#confirm) .dialog-scroll { padding: 18px; }
+  #settings .speed-options, #spread-options { grid-template-columns: 1fr; }
+  #settings .catalog-grid { grid-template-columns: 1fr; }
+  #settings .settings-bottom { bottom: -18px; }
+}
+
+/* UTC offset is one field, with three editable parts. */
+.chart-editor .field .offset-picker {
+  display: grid;
+  grid-template-columns: 64px minmax(0,1fr) 16px minmax(0,1fr);
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #e2dadc;
+  border-radius: 8px;
+  background: #fff;
+}
+.chart-editor .field .offset-picker :is(input, select) {
+  border: 0 !important;
+  border-radius: 0;
+  background: transparent !important;
+  text-align: center;
+  text-align-last: center;
+  height: 40px;
+  min-height: 40px;
+  padding: 8px;
+  box-shadow: none;
+  font-variant-numeric: tabular-nums;
+}
+.chart-editor .field .offset-picker select { border-right: 1px solid #eee7ea !important; }
+.chart-editor .field .offset-picker b { color: #9c8e94; font-weight: 400; }
+.chart-editor .field .offset-picker:focus-within { border-color: #bc96a4; box-shadow: 0 0 0 2px #92546518; }
+.chart-editor .field .offset-picker :is(input, select):focus-visible { outline: none; background: #f8f2f4 !important; }
+.chart-editor .field .offset-picker.locked { background: #f2eeef !important; border-color: #e2dadc !important; box-shadow: none; }
+.birth-library { margin-bottom: 20px; padding: 14px; border: 1px solid #e6dfdf; border-radius: 10px; background: #f5f0f2; }
+.birth-library-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.birth-library .field { margin-top: 12px; }
+.birth-library p { margin: 10px 0 0; }
+.birth-library p:empty { display: none; }
+.chart-editor .current-datetime-button,
+.chart-editor .location-picker-trigger {
+  border: 1px solid #e2dadc; border-radius: 8px; background: #f5f0f2;
+  color: #79636b; box-shadow: none; padding: 12px; font-size: 13px;
+}
+.chart-editor .current-datetime-button :is(b,small),
+.chart-editor .location-picker-trigger :is(b,span) { color: inherit; font-weight: 400; }
+.chart-editor .segmented input:disabled + span { opacity:.4; cursor:not-allowed; }
+
+/* Keep the recalculation action visible while either chart form is scrolled. */
+.chart-editor .input-panel {
+  min-height: 0;
+  overflow: auto !important;
+  padding-right: 6px !important;
+  scrollbar-gutter: stable;
+}
+.chart-editor form { padding-bottom: 8px; }
+.chart-editor .calculate-button {
+  position: relative;
+  z-index: 2;
+  justify-self: end;
+  width: auto;
+  min-width: 184px;
+  margin-top: 16px;
+  box-shadow: 0 12px 34px #39252f38 !important;
+}
+.chart-editor .error-message:not([hidden]) {
+  max-width: 100%;
+  margin: 12px 0 0;
+  padding: 8px 12px;
+  border: 1px solid #dfc8cf;
+  border-radius: 8px;
+  background: #fff8fa;
+}
+.case-entry-only > :not(#bazi-app):not(.bazi-page) { display:none!important; }
+.case-entry-only .chart-editor { width:100%;max-width:100%;height:100dvh;max-height:100dvh;border:0;border-radius:0; }
+.case-entry-only .editor-close,.case-entry-only .calculate-button { display:none; }
+
+@media(max-width:520px) {
+  .chart-editor { padding-bottom: max(16px, env(safe-area-inset-bottom)); }
+  .chart-editor form { padding-bottom: 8px; }
+  .chart-editor .calculate-button {
+    justify-self: stretch;
+    width: 100%;
+  }
+}

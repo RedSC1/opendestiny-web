@@ -1,0 +1,75 @@
+body.almanac-tool { padding: 0; background:#fafaf8; }
+.almanac-tool .tool-toolbar { position:relative; margin:0; }
+.almanac-tool .tool-toolbar > :is(span,h1) { color:#8a737a; font-size:14px; font-weight:600; line-height:1; margin:0; }
+.almanac-tool :is(.calendar-page,.qishuo-page) { padding:20px; background:#fafaf8; color:#303036; --paper:#fff; --line:#e6dfdf; --muted:#8d8584; --red:#925465; }
+.almanac-tool .page-shell { max-width:1600px; margin:auto; padding:0; }
+.almanac-tool .calendar-heading { display:none; }
+.almanac-tool .masthead { justify-content:flex-end; margin-bottom:16px; padding:0; border:0; }
+.almanac-tool :is(.glass-panel,.control-panel,.result-panel,.benchmark-panel,.settings) { border:1px solid #e6dfdf; border-radius:12px; background:#fff; box-shadow:none; backdrop-filter:none; }
+.almanac-tool :is(input,select) { min-height:38px; border:1px solid #e2dadc; border-radius:8px; background:#fff; color:#454047; padding:8px; font-size:14px; }
+.almanac-tool button { border-radius:8px; font-size:13px; }
+.almanac-tool :is(.primary-button,.calculate-button,button[type=submit]) { background:#925465; border-color:#925465; color:white; }
+.almanac-tool :is(h1,h2,h3) { font-weight:500; }
+.almanac-tool :is(.qishuo-field,.settings label) { color:#65595f; font-size:13px; }
+.almanac-tool :is(.qishuo-field small,.settings-help) { color:#8d8584; font-weight:400; }
+.almanac-tool .offset-picker { display:grid; grid-template-columns:56px 1fr 12px 1fr; border:1px solid #e2dadc; border-radius:8px; overflow:hidden; gap:0; }
+.almanac-tool .offset-picker :is(input,select) { border:0; border-radius:0; min-width:0; text-align:center; }
+@media(max-width:760px) {
+ .almanac-tool :is(.calendar-page,.qishuo-page) { padding:12px; }
+ .almanac-tool .qishuo-workspace { display:flex; flex-direction:column; }
+ .almanac-tool .qishuo-form-grid,.almanac-tool .settings { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .almanac-tool :is(.qishuo-field,.settings label) { min-width:0; }
+ .almanac-tool :is(input,select) { width:100%; font-size:16px; }
+ .almanac-tool :is(.table-shell,.table-wrap,.table-scroll) { max-width:100%; overflow-x:auto; }
+}
+
+/* Keep date highlights inside each cell, without overlapping outer halos. */
+.almanac-tool .calendar-page .date-cell {
+  background-clip: padding-box;
+  border: 3px solid transparent;
+  box-shadow: none;
+  transform: none;
+}
+.almanac-tool .calendar-page .date-cell:hover {
+  background-color: #f3eef0;
+  box-shadow: none;
+  transform: none;
+}
+.almanac-tool .calendar-page .date-cell.selected,
+.almanac-tool .calendar-page .date-cell.selected:hover {
+  background-color: #925465;
+  background-clip: padding-box;
+  box-shadow: none;
+  transform: none;
+}
+.almanac-tool .calendar-page .date-cell:focus-visible,
+.almanac-tool .calendar-page .date-cell.selected:focus-visible {
+  outline: 2px solid #b792a0;
+  outline-offset: -3px;
+}
+
+/* Align the UTC separator with the input text, not the field's label. */
+.almanac-tool #qishuo-form .offset-picker {
+  display: grid;
+  grid-template-columns: 56px minmax(0,1fr) 16px minmax(0,1fr);
+  align-items: center;
+  height: 40px;
+}
+.almanac-tool #qishuo-form .offset-picker > b {
+  position: static;
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  height: 38px;
+  line-height: 1;
+  font-size: 14px;
+  font-weight: 400;
+  color: #9c8e94;
+}
+.almanac-tool #qishuo-form .offset-picker > :is(input,select) {
+  height: 38px;
+  min-height: 0;
+}

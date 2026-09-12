@@ -29,6 +29,11 @@
     "build/**",
     "dist/**",
     "coverage/**",
+    "components/ui/**",
+    "public/tools/**",
+    "public/shared/i18n/**",
+    "tool-src/scripts/**",
+    "tests/**",
     "next-env.d.ts"
   ],
   "rules": {

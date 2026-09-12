@@ -1,0 +1,71 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>在线万年历｜公历、农历、节气与黄历</title><meta name="description" content="在线万年历，查询公历、农历、干支、节气、节日与黄历信息，支持历史日期和不同历法口径。"><link rel="canonical" href="https://tools.redsc1.com/calendar"><style></style><script type="module" src="../../shared/i18n/locale-runtime.js"></script></head><body class="almanac-tool"><div class="tool-toolbar"><a class="tool-home-link" href="/" target="_top">← 全部工具</a><span>万年历</span></div>  <link rel="stylesheet" href="../../styles/calendar.css?v=20260829-settings-v30" />
+  <link rel="stylesheet" href="../../styles/location-picker.css?v=20260825-v2" />
+  <section class="calendar-page" aria-label="万年历工具">
+<div class="page-shell">
+    <header class="masthead">
+      <div class="calendar-heading"><a class="back-link" href="/tools">← 工具箱</a><span class="seal" aria-hidden="true">历</span><div><p class="calendar-eyebrow">CALENDAR &amp; ALMANAC</p><h1>万年历</h1><p class="calendar-description">公历 · 农历 · 节气 · 每日神煞</p></div></div>
+      <div class="header-right"><button id="settings-toggle" class="text-button settings-button" aria-expanded="false" aria-controls="settings"><span aria-hidden="true">⚙</span> 历法与地点设置</button></div>
+    </header>
+    <form id="settings" class="settings" hidden aria-label="历法设置">
+      <label>历法<select id="calendar-mode"><option value="historical" selected>历史历法</option><option value="china-astronomical">现代中国天文历法</option><option value="local-astronomical">本地天文历法</option></select></label>
+      <label>时区<select id="timezone-mode"><option value="local" selected>本机时区</option><option value="china">中国标准时间（UTC+08:00）</option><option value="custom">自定义偏移</option></select></label>
+      <label id="timezone-custom-field" hidden>UTC 偏移（小时）<input id="timezone-custom" type="number" min="-12" max="14" step="0.25" value="8" inputmode="decimal"></label>
+      <label>节日<select id="festival-mode"><option value="major">主要节日</option><option value="common">常用节日与纪念日</option><option value="all" selected>全部节日</option></select><small class="settings-help">控制当天详情的内容密度；月格始终只显示 A/B 级标签。</small></label>
+      <label>定朔定气<select id="event-accuracy"><option value="fast">快速定气定朔</option><option value="mid" selected>均衡 · 专用事件模型</option><option value="accurate">严谨 · 完整视位置</option></select><small class="settings-help">三档均求天文事件时刻；快速适合大量排盘，均衡为默认，对时刻敏感时选严谨。</small></label>
+      <label>宜忌事项<select id="activity-scope"><option value="common">日常事项</option><option value="all">全部事项</option></select></label>
+      <label>查询时刻<select id="query-hour"></select></label>
+      <label>观测位置<input id="location" name="location" type="text" value="北京市"></label>
+      <label>观测经度<input id="longitude" name="longitude" type="number" min="-180" max="180" step="0.0001" value="116.4074"></label>
+      <label>观测纬度<input id="latitude" name="latitude" type="number" min="-90" max="90" step="0.0001" value="39.9042"></label>
+      <button class="location-picker-trigger calendar-location-trigger" type="button" data-location-picker><b>选择国内地区</b><span>省／市／区　›</span></button>
+      <button id="use-device-location" class="location-button" type="button">使用设备位置</button>
+      <p>固定时区，不自动处理夏令时。观测位置默认北京，仅用于日月升落；可输入坐标或读取设备位置。年份采用天文编号（0 年为公元前 1 年）。默认正午查询，23:00 换规则日；传统宜忌作民俗资料参考。</p>
+    </form>
+    <div id="notice" class="notice" role="status" aria-live="polite"></div>
+    <div class="workspace" id="workspace" aria-busy="true">
+      <aside class="summary-panel" aria-label="所选日期与天象摘要">
+        <div class="day-cover"><div class="cover-top"><span>每日黄历</span><span id="cover-weekday"></span></div><div class="cover-date"><strong id="selected-day">—</strong><div><span id="selected-solar"></span><h2 id="selected-lunar">请选择日期</h2></div><span class="cover-seal" aria-hidden="true">日<br>历</span></div><div id="selected-festivals" class="selected-festivals"></div></div>
+        <section class="sky-section" aria-label="当日天象"><div class="section-heading"><h2>当日天象</h2><span id="observer-label">北京 · 116.41°E / 39.90°N</span></div><div id="sky-grid" class="sky-grid" aria-live="polite"></div><p class="section-footnote">日月升落按固定时区与所选观测位置计算，不含地形遮挡；星座采用当日黄道十二宫角区。</p></section>
+      </aside>
+      <div class="calendar-column">
+        <section class="calendar-card" aria-label="月历">
+          <div class="month-toolbar"><div><div class="eyebrow" id="year-caption">岁序 · 月历</div><h2 id="month-title">月历</h2></div><div class="month-actions"><button id="previous-year" class="icon-button year-button" aria-label="上一年">«</button><button id="previous-month" class="icon-button" aria-label="上个月">‹</button><button id="today" class="today-button">今天</button><button id="next-month" class="icon-button" aria-label="下个月">›</button><button id="next-year" class="icon-button year-button" aria-label="下一年">»</button></div></div>
+          <div class="date-toolbar">
+            <form id="jump-form" class="date-picker-form">
+              <div class="date-picker-field">
+                <button id="year-picker-trigger" class="date-picker-trigger" type="button" aria-expanded="false" aria-controls="year-picker"><strong id="year-picker-value">2026</strong><span>年</span><i aria-hidden="true">⌄</i></button>
+                <section id="year-picker" class="date-picker-popover year-picker" hidden aria-label="选择年份">
+                  <div class="picker-input-row"><label class="sr-only" for="year-input">输入年份</label><input id="year-input" type="number" min="-5999" max="9999" required inputmode="numeric" aria-label="输入年份"><button type="submit">前往</button></div>
+                  <div class="year-pager"><button id="year-range-previous" type="button" aria-label="上一组年份">‹</button><span id="year-range-label"></span><button id="year-range-next" type="button" aria-label="下一组年份">›</button></div>
+                  <div id="year-options" class="picker-options year-options"></div>
+                </section>
+              </div>
+              <div class="date-picker-field">
+                <button id="month-picker-trigger" class="date-picker-trigger" type="button" aria-expanded="false" aria-controls="month-picker"><strong id="month-picker-value">8</strong><span>月</span><i aria-hidden="true">⌄</i></button>
+                <section id="month-picker" class="date-picker-popover month-picker" hidden aria-label="选择月份">
+                  <div class="picker-input-row"><label class="sr-only" for="month-input">输入月份</label><input id="month-input" type="number" min="1" max="12" required inputmode="numeric" aria-label="输入月份"><button type="submit">前往</button></div>
+                  <div id="month-options" class="picker-options month-options"></div>
+                </section>
+              </div>
+            </form>
+            <div class="month-events"><span id="month-terms" class="month-terms"></span><span id="month-phases" class="month-phases"></span></div>
+          </div>
+          <div class="weekdays" aria-hidden="true"><span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span class="weekend">周六</span><span class="weekend">周日</span></div>
+          <div id="calendar-grid" class="calendar-grid" aria-label="日期列表"></div>
+          <div class="calendar-legend"><span><i class="legend-dot red"></i>节日</span><span><i class="legend-dot green"></i>节气</span><span class="legend-hint">点选日期，查看每日黄历 <span aria-hidden="true">↗</span></span></div>
+        </section>
+        <footer class="calendar-attribution"><span>万年历 <span class="footer-divider">/</span> js-ephemeris-lite × huangli-lite</span><span id="footer-settings">UTC+08:00 · 现代中国天文历法</span><p>行星模型以 VSOP2013、TOP2013 为理论来源，月球模型以 ELP/MPP02 为理论来源，并按 DE441 校准；历史历法与节日资料参考《寿星天文历》，神煞和每日宜忌主要参考 cnlunar，均经本项目整理修改。节日标记不代表放假或调休安排。</p></footer>
+      </div>
+      <aside class="day-panel" aria-label="每日神煞与宜忌">
+        <div class="panel-content"><div class="side-panel-heading"><h2>宜忌神煞</h2><span>所选日期</span></div><div id="day-status" class="day-status"></div><section class="activity-section" aria-label="今日宜忌"><div class="activity-line suitable"><span class="activity-symbol">宜</span><p id="suitable"></p></div><div class="activity-line taboo"><span class="activity-symbol">忌</span><p id="taboo"></p></div></section>
+          <section class="gods-section"><div class="section-heading"><h2>每日神煞</h2><span id="god-count"></span></div><div class="god-group"><h3><i class="legend-dot green"></i>吉神宜趋</h3><div id="good-gods" class="god-tags good"></div></div><div class="god-group"><h3><i class="legend-dot red"></i>凶煞宜忌</h3><div id="bad-gods" class="god-tags bad"></div></div></section>
+          <section class="directions-section"><div class="section-heading"><h2>神位方位</h2><span>当日方位</span></div><div id="directions" class="directions"></div></section>
+          <section class="flying-section"><div class="section-heading"><h2>日九宫飞星</h2><span id="flying-period"></span></div><p class="flying-orientation">上南下北 · 左东右西</p><div id="flying-board" class="flying-board" aria-label="日九宫飞星盘"></div></section>
+          <section class="day-facts side-facts" aria-label="当日历法信息"><div class="section-heading"><h2>日辰备览</h2><span id="facts-date"></span></div><div id="pillar-row" class="pillar-row"></div><div id="detail-facts" class="detail-facts"></div></section>
+        </div>
+      </aside>
+    </div>
+  </div>
+    <noscript>此工具需要启用 JavaScript。历法和黄历数据在浏览器本地计算。</noscript>
+  </section>
+<link rel="stylesheet" href="../tool-theme.css?v=mty24cfr"><link rel="stylesheet" href="../almanac-theme.css?v=mty24cfr"><script type="module" src="../almanac-engines/calendar-page.js?v=mty24cfr"></script></body></html>
