@@ -2207,11 +2207,10 @@ function installBoardScaling() {
     const available = stage.getBoundingClientRect().width
       - Number.parseFloat(getComputedStyle(stage).paddingLeft)
       - Number.parseFloat(getComputedStyle(stage).paddingRight);
+    if (!Number.isFinite(available) || available <= 1) return;
     const chartPanel = stage.closest('.chart-panel');
     const timelinePanel = document.querySelector('.timeline-panel');
-    const chartRect = chartPanel.getBoundingClientRect();
-    const timelineRect = timelinePanel.getBoundingClientRect();
-    const isBeside = Math.abs(chartRect.top - timelineRect.top) < 2;
+    const isBeside = Math.abs(chartPanel.offsetTop - timelinePanel.offsetTop) < 2;
     const widthChanged = !Number.isFinite(lastAvailableWidth) || Math.abs(available - lastAvailableWidth) > 0.5;
     const viewportWidthChanged = Math.abs(window.innerWidth - lastViewportWidth) > 0.5;
     // iOS/iPadOS Safari 收放地址栏时只改变可视高度，也会连续触发 resize。

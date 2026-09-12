@@ -104,6 +104,14 @@ for(const kind of ['bazi','ziwei']){
   "{ const title=document.querySelector('#ziwei-chart-title'); const name=document.createElement('span'); name.dataset.noI18n=''; name.textContent=String(data.get('name') || '').trim() || '匿名'; title.replaceChildren(name,document.createTextNode('命盘')); }",
  );
  if(kind==='ziwei') js=js.replace(
+  "    const chartPanel = stage.closest('.chart-panel');",
+  "    if (!Number.isFinite(available) || available <= 1) return;\n    const chartPanel = stage.closest('.chart-panel');",
+ );
+ if(kind==='ziwei') js=js.replace(
+  "    const chartRect = chartPanel.getBoundingClientRect();\n    const timelineRect = timelinePanel.getBoundingClientRect();\n    const isBeside = Math.abs(chartRect.top - timelineRect.top) < 2;",
+  "    const isBeside = Math.abs(chartPanel.offsetTop - timelinePanel.offsetTop) < 2;",
+ );
+ if(kind==='ziwei') js=js.replace(
   `function starName(key) {
   if (STAR_NAMES[key]) return STAR_NAMES[key];
   const base = key.replace(/^flow_/, '');
