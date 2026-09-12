@@ -191,9 +191,28 @@ html=html.replace(/<title>[^<]*<\/title>/,`<title>${tarotSeo.title}</title>`).re
 let app=await read('public/tools/tarot/app.js');
 app=`await (window.redsc1LocaleReady ?? Promise.resolve());\n`+app;
 app=app.replace('const width = Math.min(count <= 2 ?', 'const gap = matchMedia("(max-width: 760px)").matches ? 16 : 44;\n    const width = Math.min(count <= 2 ?').replace('(count - 1) * 44', '(count - 1) * gap');app="import {saveRecord} from '../../shared/storage.js';\nlet historyId=crypto.randomUUID();\n"+app;
+app=app.replace("const spreadLabels =",`let tableAssetsReady;
+function preloadTableAssets() {
+  if (tableAssetsReady) return tableAssetsReady;
+  const pending = Object.values(CARD_BY_ID).map(file => \`\${ASSET_BASE}/\${file}\`);
+  const worker = async () => {
+    while (pending.length) {
+      const url = pending.shift();
+      try {
+        const response = await fetch(url, { cache: 'force-cache', priority: 'low' });
+        if (response.ok) await response.arrayBuffer();
+      } catch { /* A card can still load normally when it is revealed. */ }
+    }
+  };
+  tableAssetsReady = Promise.all(Array.from({ length: 6 }, worker));
+  return tableAssetsReady;
+}
+
+const spreadLabels =`);
 app=app.replace('function startReading(', 'function startReading(').replace(/(function startReading\([^)]*\) \{)/,"$1\n historyId=crypto.randomUUID();\n $('tarot-save-status').textContent='';$('tarot-save-retry').hidden=true;");
 app=app.replace("function afterReveal() {","function afterReveal() {").replace("'revealed' : 'drawComplete');\n}","'revealed' : 'drawComplete');\n if(reading.phase==='revealed')saveHistory();\n}");
 app+=`\n\nfunction saveHistory(){try{saveRecord({id:historyId,kind:'tarot',title:reading.question||'无题的探索',createdAt:Date.now(),snapshot:{question:reading.question,spread:{...spread(),name:spreadLabels[spread().id]||spread().name},cards:reading.cards.map(({card},i)=>({...card,position:spread().positions[i].label}))}});$('tarot-save-status').textContent='本次抽牌已保存到历史记录';$('tarot-save-retry').hidden=true;}catch(e){$('tarot-save-status').textContent='记录保存失败：'+e.message;$('tarot-save-retry').hidden=false;}}\n$('tarot-save-retry').onclick=saveHistory;\nwindow.parent.postMessage({type:'tool-ready'},location.origin);`;
+app=app.replace('\nstartReading();','\nstartReading();\nvoid preloadTableAssets();');
 await writeFile('public/tools/tarot/app.js',app);
 console.log('Prepared static tarot, bazi, ziwei and shared engine chunks.');
 await import('./prepare-calendar-tools.mjs');

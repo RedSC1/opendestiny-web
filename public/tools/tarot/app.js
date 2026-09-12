@@ -41,6 +41,23 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, duration(ms)));
 const busy = () => layoutChanging || ['spreading', 'drawing', 'revealing'].includes(reading.phase);
 const spread = () => SPREADS.find(s => s.id === reading.spreadId);
 
+let tableAssetsReady;
+function preloadTableAssets() {
+  if (tableAssetsReady) return tableAssetsReady;
+  const pending = Object.values(CARD_BY_ID).map(file => `${ASSET_BASE}/${file}`);
+  const worker = async () => {
+    while (pending.length) {
+      const url = pending.shift();
+      try {
+        const response = await fetch(url, { cache: 'force-cache', priority: 'low' });
+        if (response.ok) await response.arrayBuffer();
+      } catch { /* A card can still load normally when it is revealed. */ }
+    }
+  };
+  tableAssetsReady = Promise.all(Array.from({ length: 6 }, worker));
+  return tableAssetsReady;
+}
+
 const spreadLabels = { one: '此刻的指引', two: '现状与前路', 'past-present-future': '时间之流', 'situation-advice-outcome': '解开困局', relationship: '关系之镜', five: '深入探索', 'celtic-cross': '凯尔特十字', custom: '自由抽牌' };
 const spreadNotes = {one:'给当下的自己一句提示',two:'看清现状，寻找下一步','past-present-future':'连接过去、现在与未来','situation-advice-outcome':'理解问题、建议和可能的走向',relationship:'看见彼此与关系的模样',five:'探索表象之下的影响与选择','celtic-cross':'从十个视角展开完整解读'};
 
@@ -476,6 +493,7 @@ $('settings-form').onsubmit = event => {
   requestReset({ cardIds: selected });
 };
 startReading();
+void preloadTableAssets();
 
 // Fit the physical table into the available stage, never outside the viewport.
 function fitTable() {
