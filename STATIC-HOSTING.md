@@ -34,6 +34,10 @@ npm run preview
 
 不需要上传 dist/server，也不需要 npm 登录或服务器进程。仓库已提交生成后的静态工具文件，GitHub Actions 可以直接运行 `npm ci` 与 `npm run build`。`npm run prepare:tools` 的计算内核来自 npm；页面迁移和塔罗 vendor 刷新仍需要旧页面与塔罗的相邻源码目录。
 
+## Vercel
+
+仓库根目录的 `vercel.json` 已把框架预设设为 Other，并指定运行 `npm run build` 后发布 `dist/client`。连接 GitHub 仓库后无需在 Vercel 控制台另填构建命令或输出目录；推送到生产分支会触发新的静态部署。
+
 ## 验证范围
 
 自动测试覆盖记录隔离清空、重复保存更新、存储不足、损坏数据保留、命例字段恢复和首页推荐规则。静态导出、资源路径和主要页面截图已经检查。WebMCP 提供记录数量和首页偏好接口，已在模拟注册环境测试；未在支持 WebMCP 的真实浏览器验证。
