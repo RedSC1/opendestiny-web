@@ -167,6 +167,7 @@
 .case-chart-links button:hover { color:#663e4a; }
 .tool-workspace[data-tool="calendar"] iframe,
 .tool-workspace[data-tool="qishuo"] iframe { height:100dvh; }
+.tool-session-stack,.tool-session { min-width:0; }
 .standalone-case-editor { display:grid; gap:16px; }
 .standalone-case-editor label { display:grid; gap:7px; color:#65595f; font-size:13px; }
 .case-form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
